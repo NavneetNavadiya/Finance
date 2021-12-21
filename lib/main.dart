@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 import './button.dart';
-import './calander.dart';
-
+import './calender.dart';
+import './navigation_bar.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,32 +32,30 @@ class MyApp extends StatefulWidget{
       Scaffold(
       appBar: AppBar(title: Text("Finance")),
       body:
+              GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 8.0,
+                children: <Widget>[
+                  Container(
+                    child:
+                    Button("مدخول",null),
+                  ),
+                  Container(
+                    child: Button("المصروف",null),
+                  ),
+                  Container(
+                    child: Button ("قارير",null),
+                  ),
 
+                  Container(
+                    child: Button("الرصيد",null),
+                  ),
 
-        Column(children: <Widget>[
-          Container(
-             child:
-               Button("مدخول",null),
-
-          ),
-          Container(
-            child: Button("المصروف",null),
-          ),
-
-        Container(
-          child: Button ("قارير",null),
-
-        ),
-
-        Container(
-          child: Button("الرصيد",null),
-
-        ),
-
-      ],
+                ],
+              ),
+      bottomNavigationBar: Nav(),
       ),
-
-      )
     );
   }
 
