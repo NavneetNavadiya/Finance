@@ -4,8 +4,15 @@ class Calander extends StatelessWidget {
   Calander(this.name);
   @override
   Widget build(BuildContext context) {
-     return ElevatedButton(onPressed: () async
+     return TextButton(
+       style: ButtonStyle(
+
+
+     ),
+       child:Icon(Icons.calendar_today),
+       onPressed: () async
     {
+
       showDatePicker(
         context: context,
         initialDate: DateTime.now(), // Refer step 1
@@ -13,7 +20,7 @@ class Calander extends StatelessWidget {
         lastDate: DateTime(2025),
       );
     },
-      child: Text(name),
+
     );
   }
 
