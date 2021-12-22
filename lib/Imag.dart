@@ -5,10 +5,13 @@ class Img extends StatelessWidget {
   Img(this.path, this.function);
   @override
   Widget build(BuildContext context) {
-    return IconButton(
+    return InkWell(
+      child:IconButton(
         onPressed:function,
         icon: Image.asset(path),
-        iconSize: 50,
+        iconSize: 130,
+
+    )
 
     );
 

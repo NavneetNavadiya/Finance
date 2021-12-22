@@ -55,10 +55,22 @@ _nave(BuildContext context, Widget page)
                     Button("مدخول",null),
                   ),
                   Container(
-                    child: Img("./icon/IconSpend.png",(){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder:(context)=> Spending()));
-                    })
+                    color: Colors.green,
+                    child: Column(children: <Widget>[
+                      Img("./icon/IconSpend.png",(){
+                        Navigator.push(context,
+                            MaterialPageRoute(builder:(context)=> Spending()));
+                      }
+                      ),
+                      Text("المصاريف",
+                        style:TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight. bold,
+                      ),
+                          ),
+                    ],
+                    )
+
                   ),
                   Container(
                     child: Button ("تقارير",null),
