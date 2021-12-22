@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-class Calander extends StatelessWidget {
-  final String name;
-  Calander(this.name);
+class Calender extends StatelessWidget {
+
+  Calender();
   @override
   Widget build(BuildContext context) {
      return TextButton(
