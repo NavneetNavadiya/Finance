@@ -1,65 +1,71 @@
-
+import 'package:finance/boldText.dart';
 import 'package:flutter/material.dart';
 
 import './button.dart';
-import './calander.dart';
-
+import './calender.dart';
+import './navigation_bar.dart';
+import 'SpendingPage.dart';
+import 'Imag.dart';
 
 void main() {
   runApp(MyApp());
 }
-class MyApp extends StatefulWidget{
+
+class MyApp extends StatelessWidget {
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Finance',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(title: Text("Finance")),
+        body: MyAppState(),
+        bottomNavigationBar: Nav(),
+      ),
+    );
   }
 }
 
-  // This widget is the root of your application.
- class _MyAppState extends State<MyApp> {
+_nave(BuildContext context, Widget page) {}
 
+// This widget is the root of your application.
+class MyAppState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
-      ),
-      home:
-      Scaffold(
-      appBar: AppBar(title: Text("Finance")),
-      body:
-
-
-        Column(children: <Widget>[
-          Container(
-             child:
-               Button("مدخول",null),
-
-          ),
-          Container(
-            child: Button("المصروف",null),
-          ),
-
-        Container(
-          child: Button ("قارير",null),
-
+      home: Scaffold(
+        body: GridView.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 4.0,
+          mainAxisSpacing: 8.0,
+          children: <Widget>[
+            Container(
+              child: Button("مدخول", null),
+            ),
+            Container(
+                color: Colors.green,
+                child: Column(
+                  children: <Widget>[
+                    Img("./icon/IconSpend.png", () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SpendingPage()));
+                    }),
+                    Boldtext("المصاريف")
+                  ],
+                )),
+            Container(
+              child: Button("تقارير", null),
+            ),
+            Container(
+              child: Button("الرصيد", null),
+            ),
+          ],
         ),
-
-        Container(
-          child: Button("الرصيد",null),
-
-        ),
-
-      ],
       ),
-
-      )
     );
   }
-
-
 }
