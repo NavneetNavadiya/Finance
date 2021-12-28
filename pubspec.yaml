@@ -27,10 +27,11 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  sqflite: ^1.1.5
+  sqflite: 
   path:
   camera:
-  image_picker:
+  intl:
+  flutter_staggered_grid_view:
   path_provider:
   flutter:
     sdk: flutter

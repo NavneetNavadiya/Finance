@@ -1,3 +1,4 @@
+import 'package:finance/spend.dart';
 import 'package:flutter/material.dart';
 
 import './calender.dart';
@@ -46,14 +47,13 @@ class page extends State<addSpend> {
             padding: EdgeInsets.only(left: 100),
             child: Text("الصنف"),
           ),
-
-          Column(children: <Widget>[
-            Container(
-                padding: EdgeInsets.only(left: 0, top: 50),
-                width: double.infinity,
-              child:TextField(keyboardType: TextInputType.multiline)
-            )
-          ],
+          Column(
+            children: <Widget>[
+              Container(
+                  padding: EdgeInsets.only(left: 0, top: 50),
+                  width: double.infinity,
+                  child: TextField(keyboardType: TextInputType.multiline))
+            ],
           ),
           Container(
             padding: EdgeInsets.only(left: 100, top: 50),
@@ -63,7 +63,12 @@ class page extends State<addSpend> {
       ),
       bottomSheet: Container(
           width: double.infinity,
-          child: Button("اضافة", () {
+          child: Button("اضافة", () async {
+            Spend spend = new Spend(
+                id: 0, date: 'DateTime.now()', value: 100, type: 'car');
+            await DBhelper.instance.insertSpend(spend);
+
+            print(await DBhelper.instance.PrintAll());
             print("success");
             Navigator.pop(context);
           })),

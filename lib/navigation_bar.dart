@@ -1,5 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'camera.dart';
 
 class Nav extends StatelessWidget {
   const Nav();
@@ -31,16 +34,14 @@ class Nav extends StatelessWidget {
               label: 'Menu',
               backgroundColor: Colors.blue),
         ],
-        // onTap: (value) {
-        //        if(value == 4)
-        //         {
-        //           print("the camera icon has been click");
-        //           // WidgetsFlutterBinding.ensureInitialized();
-        //           // cameras = await availableCameras();
-        //           // Navigator.of(context).push(MaterialPageRoute(
-        //           //     builder: (context) => CameraApp())
-        //           //);
-        //         }
+        // onTap: (value) async {
+        //   if (value == 4) {
+        //     print("the camera icon has been click");
+        //     WidgetsFlutterBinding.ensureInitialized();
+        //     camera = (await availableCameras()) as CameraDescription;
+        //     Navigator.of(context)
+        //         .push(MaterialPageRoute(builder: (context) => camera()));
+        //   }
         // },
       ),
     );
