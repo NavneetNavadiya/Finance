@@ -101,17 +101,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                       // Attempt to take a picture and get the file `image`
                       // where it was saved.
                       final image = await _controller.takePicture();
-<<<<<<< HEAD
-                      ImagePicker.pickImage(source: ImageSource.camera)
-                          .then((File recordedImage) {
-                        //.saveImage(recordedImage.path);
-                      });
-=======
                       // ImagePicker.pickImage(source: ImageSource.camera)
                       //     .then((File recordedImage) {
                       //   //.saveImage(recordedImage.path);
                       // });
->>>>>>> 60d0d61919c302dbe610ff1c7958533884974bd0
                     } catch (e) {
                       // If an error occurs, log the error to the console.
                       print(e);
