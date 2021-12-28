@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class Button extends StatelessWidget {
   final String _name;
   var _function;
@@ -7,10 +6,14 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Ink(
-        child: ElevatedButton(
-      onPressed: _function,
+      child:ElevatedButton(onPressed:_function,
       child: Text(_name),
-      style: ButtonStyle(),
-    ));
+      style: ButtonStyle(
+
+      ),
+    )
+    );
+
   }
+
 }

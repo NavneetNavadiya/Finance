@@ -11,6 +11,7 @@ class Boldtext extends StatelessWidget {
       style: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
+
       ),
     );
     throw UnimplementedError();

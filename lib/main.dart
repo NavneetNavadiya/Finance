@@ -33,29 +33,34 @@ class MyAppState extends State<MyApp> {
           crossAxisSpacing: 4.0,
           mainAxisSpacing: 8.0,
           children: <Widget>[
-            CButton("المدخول", Colors.amberAccent, "", () {
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => new IncomePage()));
+
+            CButton("المدخول", Colors.amberAccent, "", (){
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => new IncomePage())
+              );
             }),
-            CButton("المصاريف", Colors.blue, "", () {
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => new SpendingPage()));
-            }),
+
+            CButton("المصاريف",Colors.blue, "",() {
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => new SpendingPage())
+              );
+            }
+            ),
+
             Container(
               child: Button("تقارير", null),
             ),
-            CButton("الرصيد", Colors.red, "icon/IconSpend.png", () {
-              Navigator.push(context,
-                  new MaterialPageRoute(builder: (context) => new Balance()));
-            }),
+            CButton("الرصيد", Colors.red,"icon/IconSpend.png",() {
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => new Balance())
+              );}
+            ),
+
           ],
         ),
         bottomNavigationBar: Nav(),
       ),
+
     );
   }
 }
