@@ -1,65 +1,66 @@
-
+import 'package:finance/circual%20button.dart';
+import 'package:finance/incomePage.dart';
 import 'package:flutter/material.dart';
 
 import './button.dart';
-import './calander.dart';
-
+import './navigation_bar.dart';
+import 'SpendingPage.dart';
+import 'balancePage.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(home: MyApp()));
 }
-class MyApp extends StatefulWidget{
+
+class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _MyAppState();
+    return MyAppState();
   }
 }
 
-  // This widget is the root of your application.
- class _MyAppState extends State<MyApp> {
-
+// This widget is the root of your application.
+class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
+      title: "Finance",
+      theme: ThemeData(primaryColor: Colors.blue),
+      home: Scaffold(
+        appBar: AppBar(title: Text("home")),
+        body: GridView.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 4.0,
+          mainAxisSpacing: 8.0,
+          children: <Widget>[
 
-        primarySwatch: Colors.blue,
-      ),
-      home:
-      Scaffold(
-      appBar: AppBar(title: Text("Finance")),
-      body:
+            CButton("المدخول", Colors.amberAccent, "", (){
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => new IncomePage())
+              );
+            }),
 
+            CButton("المصاريف",Colors.blue, "",() {
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => new SpendingPage())
+              );
+            }
+            ),
 
-        Column(children: <Widget>[
-          Container(
-             child:
-               Button("مدخول",null),
+            Container(
+              child: Button("تقارير", null),
+            ),
+            CButton("الرصيد", Colors.red,"icon/IconSpend.png",() {
+              Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => new Balance())
+              );}
+            ),
 
-          ),
-          Container(
-            child: Button("المصروف",null),
-          ),
-
-        Container(
-          child: Button ("قارير",null),
-
+          ],
         ),
-
-        Container(
-          child: Button("الرصيد",null),
-
-        ),
-
-      ],
+        bottomNavigationBar: Nav(),
       ),
 
-      )
     );
   }
-
-
 }
