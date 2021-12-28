@@ -32,10 +32,22 @@
 //         onCreate: (Database database, int version) async {
 //       print("database has been created");
 //
+<<<<<<< HEAD
 //       await database.execute(
 //           'CREATE TABLE Spend ($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_DATE DATE, $COLUMN_VALUE DOUBLE, $COLUMN_TYPE TEXT)');
 //     });
 //   }
 //
 //   static Future<void> insert(String table, Map<String, Object> data) async {}
+=======
+//        await database.execute(
+//           'CREATE TABLE Spend ($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_DATE DATE, $COLUMN_VALUE DOUBLE, $COLUMN_TYPE TEXT)');
+//     });
+//
+//   }
+//
+//   static Future<void> insert(String table, Map<String, Object>data)async {
+//
+//   }
+>>>>>>> 60d0d61919c302dbe610ff1c7958533884974bd0
 // }

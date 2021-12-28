@@ -33,6 +33,7 @@ class MyAppState extends State<MyApp> {
           crossAxisSpacing: 4.0,
           mainAxisSpacing: 8.0,
           children: <Widget>[
+<<<<<<< HEAD
 
             CButton("المدخول", Colors.amberAccent, "", (){
               Navigator.push(context, new MaterialPageRoute(
@@ -56,11 +57,35 @@ class MyAppState extends State<MyApp> {
               );}
             ),
 
+=======
+            CButton("المدخول", Colors.amberAccent, "", () {
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => new IncomePage()));
+            }),
+            CButton("المصاريف", Colors.blue, "", () {
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => new SpendingPage()));
+            }),
+            Container(
+              child: Button("تقارير", null),
+            ),
+            CButton("الرصيد", Colors.red, "icon/IconSpend.png", () {
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) => new Balance()));
+            }),
+>>>>>>> 60d0d61919c302dbe610ff1c7958533884974bd0
           ],
         ),
         bottomNavigationBar: Nav(),
       ),
+<<<<<<< HEAD
 
+=======
+>>>>>>> 60d0d61919c302dbe610ff1c7958533884974bd0
     );
   }
 }

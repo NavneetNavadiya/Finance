@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 60d0d61919c302dbe610ff1c7958533884974bd0
 class Nav extends StatelessWidget {
   const Nav();
   @override
@@ -9,6 +14,7 @@ class Nav extends StatelessWidget {
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
+<<<<<<< HEAD
           BottomNavigationBarItem(
               icon: Icon(Icons.settings),
               label: 'Settings',
@@ -46,3 +52,38 @@ class Nav extends StatelessWidget {
     );
   }
 }
+=======
+      BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: 'Settings',
+          backgroundColor: Colors.blue
+      ),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.bar_chart),
+          label: 'Report',
+          backgroundColor: Colors.blue
+      ),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+          backgroundColor: Colors.blue
+      ),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.camera),
+          label: 'Camera',
+          backgroundColor: Colors.blue
+      ),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.menu),
+          label: 'Menu',
+          backgroundColor: Colors.blue
+
+      ),
+
+    ],
+
+   ),
+    );
+  }
+}
+>>>>>>> 60d0d61919c302dbe610ff1c7958533884974bd0
