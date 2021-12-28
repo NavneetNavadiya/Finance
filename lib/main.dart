@@ -1,70 +1,60 @@
-import 'package:finance/boldText.dart';
+import 'package:finance/circual%20button.dart';
+import 'package:finance/incomePage.dart';
 import 'package:flutter/material.dart';
 
 import './button.dart';
-import './calender.dart';
 import './navigation_bar.dart';
 import 'SpendingPage.dart';
-import 'Imag.dart';
+import 'balancePage.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(home: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Finance',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(title: Text("Finance")),
-        body: MyAppState(),
-        bottomNavigationBar: Nav(),
-      ),
-    );
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return MyAppState();
   }
 }
 
-_nave(BuildContext context, Widget page) {}
-
 // This widget is the root of your application.
-class MyAppState extends StatelessWidget {
+class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Finance",
+      theme: ThemeData(primaryColor: Colors.blue),
       home: Scaffold(
+        appBar: AppBar(title: Text("home")),
         body: GridView.count(
           crossAxisCount: 2,
           crossAxisSpacing: 4.0,
           mainAxisSpacing: 8.0,
           children: <Widget>[
-            Container(
-              child: Button("مدخول", null),
-            ),
-            Container(
-                color: Colors.green,
-                child: Column(
-                  children: <Widget>[
-                    Img("./icon/IconSpend.png", () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SpendingPage()));
-                    }),
-                    Boldtext("المصاريف")
-                  ],
-                )),
+            CButton("المدخول", Colors.amberAccent, "", () {
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => new IncomePage()));
+            }),
+            CButton("المصاريف", Colors.blue, "", () {
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => new SpendingPage()));
+            }),
             Container(
               child: Button("تقارير", null),
             ),
-            Container(
-              child: Button("الرصيد", null),
-            ),
+            CButton("الرصيد", Colors.red, "icon/IconSpend.png", () {
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) => new Balance()));
+            }),
           ],
         ),
+        bottomNavigationBar: Nav(),
       ),
     );
   }

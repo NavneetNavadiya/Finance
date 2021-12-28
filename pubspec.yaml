@@ -29,6 +29,9 @@ environment:
 dependencies:
   sqflite: ^1.1.5
   path:
+  camera:
+  image_picker:
+  path_provider:
   flutter:
     sdk: flutter
 
