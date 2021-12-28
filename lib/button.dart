@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
-  final String name;
-  var function;
-  var icon;
-  Button(this.name, this.function);
+  final String _name;
+  var _function;
+  Button(this._name, this._function);
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed:function, child: Text(name));
+    return Ink(
+      child:ElevatedButton(onPressed:_function,
+      child: Text(_name),
+      style: ButtonStyle(
+
+      ),
+    )
+    );
 
   }
 
