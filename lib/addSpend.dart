@@ -2,23 +2,15 @@ import 'package:flutter/material.dart';
 
 import './calender.dart';
 import './button.dart';
+import './calender.dart';
 import 'database/db.dart';
 
-class addSpend extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return page();
-  }
-}
-
-class page extends State<addSpend> {
+class addSpend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("اضافة مصروف"),
+        title: Text("اضافة المصاريف"),
       ),
       body: GridView.count(
         crossAxisCount: 2,
@@ -32,11 +24,11 @@ class page extends State<addSpend> {
             child: Text("التاريخ"),
           ),
           Container(
-            child: TextField(keyboardType: TextInputType.number),
-          ),
+              padding: EdgeInsets.only(left: 50),
+              child: TextField(keyboardType: TextInputType.number)),
           Container(padding: EdgeInsets.only(left: 100), child: Text("المبلغ")),
           Container(
-            padding: EdgeInsets.only(bottom: 100),
+            padding: EdgeInsets.only(bottom: 100, left: 50),
             child: DropdownButton(
               onChanged: null,
               items: [],
@@ -45,19 +37,6 @@ class page extends State<addSpend> {
           Container(
             padding: EdgeInsets.only(left: 100),
             child: Text("الصنف"),
-          ),
-
-          Column(children: <Widget>[
-            Container(
-                padding: EdgeInsets.only(left: 0, top: 50),
-                width: double.infinity,
-              child:TextField(keyboardType: TextInputType.multiline)
-            )
-          ],
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 100, top: 50),
-            child: Text("ملاحضة"),
           ),
         ],
       ),
@@ -68,15 +47,5 @@ class page extends State<addSpend> {
             Navigator.pop(context);
           })),
     );
-  }
-}
-
-class textController extends State {
-  TextEditingController TC = new TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }

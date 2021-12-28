@@ -32,10 +32,13 @@
 //         onCreate: (Database database, int version) async {
 //       print("database has been created");
 //
-//       await database.execute(
+//        await database.execute(
 //           'CREATE TABLE Spend ($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_DATE DATE, $COLUMN_VALUE DOUBLE, $COLUMN_TYPE TEXT)');
 //     });
+//
 //   }
 //
-//   static Future<void> insert(String table, Map<String, Object> data) async {}
+//   static Future<void> insert(String table, Map<String, Object>data)async {
+//
+//   }
 // }
