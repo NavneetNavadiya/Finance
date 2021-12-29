@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:finance/spend.dart';
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../SpendingPage.dart';
@@ -32,7 +33,7 @@ class DBhelper {
       print("database has been created");
 
       await database.execute(
-          'CREATE TABLE Spend ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT , $COLUMN_DATE TEXT, $COLUMN_VALUE DOUBLE, $COLUMN_TYPE TEXT)');
+          'CREATE TABLE Spend ($COLUMN_ID AUTOINCREMENT INTEGER PRIMARY KEY  , $COLUMN_DATE TEXT, $COLUMN_VALUE DOUBLE, $COLUMN_TYPE TEXT)');
     });
   }
 
@@ -61,5 +62,11 @@ class DBhelper {
           value: maps[i]['value'],
           type: maps[i]['type']);
     });
+  }
+
+  Future<List<Map<String, dynamic>>> SpendMap() async {
+    final db = await instance.database;
+    List<Map<String, dynamic>> maps;
+    return maps = await db!.query('Spend');
   }
 }

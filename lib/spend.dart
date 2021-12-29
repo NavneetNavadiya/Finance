@@ -6,11 +6,7 @@ class Spend {
   late final double value;
   late final String type;
 
-  Spend(
-      {required this.id,
-      required this.date,
-      required this.type,
-      required this.value});
+  Spend({this.id = 0, this.date = '', this.type = '', this.value = 0});
 
   Map<String, dynamic> toMap() {
     return {'id': id, 'date': date, 'value': value, 'type': type};
