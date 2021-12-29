@@ -64,9 +64,11 @@ class DBhelper {
     });
   }
 
+  // ignore: non_constant_identifier_names
   Future<List<Map<String, dynamic>>> SpendMap() async {
     final db = await instance.database;
+
     List<Map<String, dynamic>> maps;
-    return maps = await db!.query('Spend');
+    return maps = await db!.query('Spend') as List<Map<String, dynamic>>;
   }
 }

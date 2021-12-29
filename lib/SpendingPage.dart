@@ -6,8 +6,11 @@ import 'database/db.dart';
 import 'addSpend.dart';
 import 'package:finance/addSpend.dart';
 
+import 'spend.dart';
+
 class SpendingPage extends StatelessWidget {
-  Future<List<Map<String, dynamic>>> map = DBhelper.instance.SpendMap();
+  List<Map<String, dynamic>> map =
+      DBhelper.instance.SpendMap() as List<Map<String, dynamic>>;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,17 +20,12 @@ class SpendingPage extends StatelessWidget {
       body: ListView(
         addAutomaticKeepAlives: true,
         children: <Widget>[
-          Card(
-            child: Column(
-              children: <Widget>[
-                Container(),
-                ListTile(
-                    leading: Icon(Icons.album),
-                    title: Text("الفاتورة"),
-                    subtitle: Text('hallow world'))
-              ],
-            ),
-          ),
+          Container(
+              child: Card(
+                  child: ListTile(
+                      leading: const Icon(Icons.album),
+                      title: const Text("الفاتورة"),
+                      subtitle: Text(map[0]['value'] as String)))),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -41,4 +39,8 @@ class SpendingPage extends StatelessWidget {
       bottomNavigationBar: Nav(),
     );
   }
+}
+
+test() {
+  return;
 }
