@@ -1,9 +1,11 @@
+import 'package:finance/main.dart';
 import 'package:finance/spend.dart';
 import 'package:flutter/material.dart';
 
 import './calender.dart';
 import './button.dart';
 import 'database/db.dart';
+import 'SpendingPage.dart';
 
 class addSpend extends StatefulWidget {
   @override
@@ -65,12 +67,16 @@ class page extends State<addSpend> {
           width: double.infinity,
           child: Button("اضافة", () async {
             Spend spend = new Spend(
-                id: 0, date: 'DateTime.now()', value: 100, type: 'car');
+                id: 1, date: 'DateTime.now()', value: 100, type: 'car');
             await DBhelper.instance.insertSpend(spend);
 
             print(await DBhelper.instance.PrintAll());
             print("success");
-            Navigator.pop(context);
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyApp()),
+            );
           })),
     );
   }

@@ -5,7 +5,10 @@ import 'package:finance/spend.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import '../SpendingPage.dart';
+import '../spend.dart';
+
+bool isLoading = false;
+late List<Spend> Spends;
 
 class DBhelper {
   static const String COLUMN_ID = "id";
@@ -33,13 +36,13 @@ class DBhelper {
       print("database has been created");
 
       await database.execute(
-          'CREATE TABLE Spend ($COLUMN_ID AUTOINCREMENT INTEGER PRIMARY KEY  , $COLUMN_DATE TEXT, $COLUMN_VALUE DOUBLE, $COLUMN_TYPE TEXT)');
+          'CREATE TABLE Spend ($COLUMN_ID AUTOINCREMENT  INTEGER PRIMARY KEY  , $COLUMN_DATE TEXT, $COLUMN_VALUE DOUBLE, $COLUMN_TYPE TEXT)');
     });
   }
 
   Future<void> insertSpend(spend) async {
     final db = await instance.database;
-
+    spend.setID(null);
     db?.insert(
       'Spend',
       spend.toMap(),
@@ -65,10 +68,15 @@ class DBhelper {
   }
 
   // ignore: non_constant_identifier_names
-  Future<List<Map<String, dynamic>>> SpendMap() async {
+  Future<List<Map<String, dynamic>>> SpendTable() async {
     final db = await instance.database;
 
-    List<Map<String, dynamic>> maps;
-    return maps = await db!.query('Spend') as List<Map<String, dynamic>>;
+    return await db!.query('Spend');
+  }
+
+  Future close() async {
+    final db = await instance.database;
+
+    db?.close();
   }
 }
