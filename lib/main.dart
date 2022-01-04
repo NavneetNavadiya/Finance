@@ -1,12 +1,14 @@
+// ignore_for_file: unnecessary_new
+
 import 'package:finance/circual%20button.dart';
 import 'package:finance/incomePage.dart';
+import 'package:finance/bill.dart';
 import 'package:flutter/material.dart';
 
 import './button.dart';
 import './navigation_bar.dart';
-import 'SpendingPage.dart';
+import 'BillsPage.dart';
 import 'balancePage.dart';
-import 'spend.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -26,36 +28,52 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Finance",
-      theme: ThemeData(primaryColor: Colors.blue),
+      theme: ThemeData(primaryColor: Colors.amber),
       home: Scaffold(
         appBar: AppBar(title: Text("home")),
-        body: GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 4.0,
-          mainAxisSpacing: 8.0,
-          children: <Widget>[
-            CButton("المدخول", Colors.amberAccent, "", () {
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => new IncomePage()));
-            }),
-            CButton("المصاريف", Colors.blue, "", () {
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => new SpendingPage()));
-            }),
+        body: Column(
+          children: [
             Container(
-              child: Button("تقارير", null),
+              width: double.infinity,
+              child: Text(DateTime.now().toString()),
             ),
-            CButton("الرصيد", Colors.red, "icon/IconSpend.png", () {
-              Navigator.push(context,
-                  new MaterialPageRoute(builder: (context) => new Balance()));
-            }),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 8.0,
+                children: <Widget>[
+                  Container(
+                      padding: EdgeInsets.only(left: 100, top: 50),
+                      child: Text("654156")),
+                  Container(
+                      padding: EdgeInsets.only(left: 100, top: 50),
+                      child: Text('الرصيد')),
+                  Container(
+                      padding: EdgeInsets.only(left: 100, top: 50),
+                      child: Text('')),
+                  Container(
+                      padding: EdgeInsets.only(left: 100, top: 50),
+                      child: Text('اجمالي الرصيد')),
+                  Container(
+                      padding: EdgeInsets.only(left: 100, top: 50),
+                      child: Text('')),
+                  Container(
+                      padding: EdgeInsets.only(left: 100, top: 50),
+                      child: Text('المصاريف')),
+                  Container(
+                      padding: EdgeInsets.only(left: 100, top: 50),
+                      child: Text('')),
+                  Container(
+                    padding: EdgeInsets.only(left: 100, top: 50),
+                    child: Text('الرصيد'),
+                  )
+                ],
+              ),
+            )
           ],
         ),
-        bottomNavigationBar: Nav(),
+        bottomNavigationBar: Nav(2),
       ),
     );
   }

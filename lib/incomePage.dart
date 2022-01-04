@@ -23,7 +23,7 @@ class IncomePage extends StatelessWidget {
             );
           },
           child: const Icon(Icons.add)),
-      bottomNavigationBar: Nav(),
+      bottomNavigationBar: Nav(1),
     );
   }
 }

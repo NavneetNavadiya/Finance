@@ -6,26 +6,25 @@ import 'package:sqflite_common/sqlite_api.dart';
 
 import './navigation_bar.dart';
 import 'database/db.dart';
-import 'addSpend.dart';
-import 'package:finance/addSpend.dart';
-import 'spend.dart';
+import 'addBill.dart';
+import 'package:finance/addBill.dart';
+import 'bill.dart';
 
 bool isLoading = false;
-late List<Spend> Spends;
-late Spend? spend;
+late Bill? _bill;
 
-class SpendingPage extends StatefulWidget {
+class Billpage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _page();
   }
 }
 
-class _page extends State<SpendingPage> {
+class _page extends State<Billpage> {
   Future refreshSpends() async {
     setState(() => isLoading = true);
 
-    Spends = (await DBhelper.instance.PrintAll());
+    Bills = (await DBhelper.instance.PrintAll());
 
     setState(() => isLoading = false);
   }
@@ -43,40 +42,48 @@ class _page extends State<SpendingPage> {
       ),
       body: isLoading
           ? CircularProgressIndicator()
-          : Spends.isEmpty
-              ? const Text("NO Bills!")
+          : Bills.isEmpty
+              ? const Text("NO BILLS!")
               : buildSpneds(),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
             refreshSpends();
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => addSpend()),
+              MaterialPageRoute(builder: (context) => addBill()),
             );
             refreshSpends();
           },
           child: const Icon(Icons.add)),
-      bottomNavigationBar: Nav(),
+      bottomNavigationBar: Nav(3),
     );
   }
 
   Widget buildSpneds() => StaggeredGridView.countBuilder(
       padding: EdgeInsets.all(8),
-      itemCount: Spends.length,
+      itemCount: Bills.length,
       staggeredTileBuilder: (index) => StaggeredTile.fit(2),
       crossAxisCount: 1,
       mainAxisSpacing: 1,
       crossAxisSpacing: 1,
       itemBuilder: (context, index) {
-        spend = Spends[index];
-        if (spend != null) {
+        _bill = Bills[index];
+
+        if (_bill != null) {
           return Card(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 ListTile(
-                  title: Text('Type :' + spend?.getType()),
-                  subtitle: Text(''),
+                  title: Text(_bill!.getID().toString() +
+                      ' Date: ' +
+                      _bill!.getDate() +
+                      '\nType :' +
+                      _bill!.getType()),
+                  subtitle: Text('spend: ' +
+                      _bill!.getValue().toString() +
+                      '\nNote: ' +
+                      _bill!.getNote()),
                 ),
               ],
             ),
@@ -85,17 +92,3 @@ class _page extends State<SpendingPage> {
           return Text('no bills');
       });
 }
-
-
-
-/*
-Container(
-      child: Card(
-        child: ListTile(
-          leading: const Icon(Icons.album),
-          title: const Text("الفاتورة"),
-          subtitle: Text(map[0]['value'] as String),
-        ),
-      ),
-    )
-*/ 

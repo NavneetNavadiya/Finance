@@ -1,20 +1,23 @@
+// ignore_for_file: constant_identifier_names, import_of_legacy_library_into_null_safe
+
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:finance/spend.dart';
-import 'package:flutter/material.dart';
+import 'package:finance/bill.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import '../spend.dart';
+import '../bill.dart';
 
 bool isLoading = false;
-late List<Spend> Spends;
+late List<Bill> Bills;
 
 class DBhelper {
   static const String COLUMN_ID = "id";
   static const String COLUMN_DATE = 'date';
   static const String COLUMN_VALUE = 'value';
   static const String COLUMN_TYPE = 'type';
+  static const String COLUMN_NOTE = 'note';
+  static const String TABLE = 'Bill';
 
   static final DBhelper instance = DBhelper._init();
   DBhelper._init();
@@ -36,47 +39,47 @@ class DBhelper {
       print("database has been created");
 
       await database.execute(
-          'CREATE TABLE Spend ($COLUMN_ID AUTOINCREMENT  INTEGER PRIMARY KEY  , $COLUMN_DATE TEXT, $COLUMN_VALUE DOUBLE, $COLUMN_TYPE TEXT)');
+          'CREATE TABLE $TABLE ($COLUMN_ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $COLUMN_DATE TEXT, $COLUMN_VALUE DOUBLE, $COLUMN_TYPE TEXT, $COLUMN_NOTE TEXT)');
     });
   }
 
-  Future<void> insertSpend(spend) async {
+  Future<void> insertBill(bill) async {
     final db = await instance.database;
-    spend.setID(null);
-    db?.insert(
-      'Spend',
-      spend.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    String date = bill.getDate();
+    double value = bill.getValue();
+    String type = bill.getType();
+    String note = bill.getNote();
+    await db?.rawInsert(
+        'INSERT INTO $TABLE (${DBhelper.COLUMN_DATE}, ${DBhelper.COLUMN_VALUE},${DBhelper.COLUMN_TYPE},${DBhelper.COLUMN_NOTE}) VALUES (?,?,?,?)',
+        [date, value, type, note]);
+    // db?.insert(
+    //   'Spend',
+    //   spend.toMap(),
+    //   conflictAlgorithm: ConflictAlgorithm.replace,
+    // );
   }
 
-  // ignore: non_constant_identifier_names
-  Future<List<Spend>> PrintAll() async {
+  Future<List<Bill>> PrintAll() async {
     final db = await instance.database;
 
-    // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await db!.query('Spend');
+    // Query the table for all The spend.
+    final List<Map<String, dynamic>> maps = await db!.query(TABLE);
 
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    // Convert the List<Map<String, dynamic> into a List<spend>.
     return List.generate(maps.length, (i) {
-      return Spend(
+      return Bill(
           id: maps[i]['id'],
           date: maps[i]['date'],
           value: maps[i]['value'],
-          type: maps[i]['type']);
+          type: maps[i]['type'],
+          note: maps[i]['note']);
     });
   }
 
   // ignore: non_constant_identifier_names
-  Future<List<Map<String, dynamic>>> SpendTable() async {
-    final db = await instance.database;
+  // Future<List<Map<String, dynamic>>> SpendTable() async {
+  //   final db = await instance.database;
 
-    return await db!.query('Spend');
-  }
-
-  Future close() async {
-    final db = await instance.database;
-
-    db?.close();
-  }
+  //   return await db!.query('Spend');
+  // }
 }

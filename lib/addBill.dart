@@ -1,14 +1,14 @@
+import 'package:finance/main.dart';
+import 'package:finance/bill.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import './calender.dart';
 import './button.dart';
 import 'database/db.dart';
 
-late var _Textvalue = '0';
-late var _note = 'NO NOTE';
-late DateTime _date;
-
-class addIncome extends StatefulWidget {
+class addBill extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -16,13 +16,18 @@ class addIncome extends StatefulWidget {
   }
 }
 
-class page extends State<addIncome> {
+class page extends State<addBill> {
+  String catagories = 'اختارنوع المصروف';
+  late var _Textvalue = '0';
+  late var _note = 'NO NOTE';
+  late DateTime _date;
+  final DateFormat formatter = DateFormat('yyyy-MM-dd');
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("اضافة مدخول"),
+        title: Text("اضافة مصروف"),
       ),
       body: GridView.count(
         crossAxisCount: 2,
@@ -51,26 +56,51 @@ class page extends State<addIncome> {
             child: Text("التاريخ"),
           ),
           Container(
-            child: TextField(keyboardType: TextInputType.number),
+            child: TextField(
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              onChanged: (text) {
+                _Textvalue = text;
+              },
+            ),
           ),
           Container(padding: EdgeInsets.only(left: 100), child: Text("المبلغ")),
           Container(
-            padding: EdgeInsets.only(bottom: 100),
-            child: DropdownButton(
-              onChanged: null,
-              items: [],
-            ),
-          ),
+              padding: EdgeInsets.only(bottom: 100),
+              child: DropdownButton(onChanged: null, items: [])),
           Container(
             padding: EdgeInsets.only(left: 100),
             child: Text("الصنف"),
+          ),
+          Column(
+            children: <Widget>[
+              Container(
+                  padding: EdgeInsets.only(left: 0, top: 50),
+                  width: double.infinity,
+                  child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    onChanged: (text) {
+                      _note = text;
+                    },
+                  ))
+            ],
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 100, top: 50),
+            child: Text("ملاحضة"),
           ),
         ],
       ),
       bottomSheet: Container(
           width: double.infinity,
-          child: Button("اضافة", () {
+          child: Button("اضافة", () async {
+            late double value = double.parse(_Textvalue);
+            late String formatted = formatter.format(_date);
+            Bill bill = Bill(
+                id: 1, date: formatted, value: value, type: 'car', note: _note);
+            await DBhelper.instance.insertBill(bill);
             print("success");
+
             Navigator.pop(context);
           })),
     );
