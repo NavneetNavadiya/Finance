@@ -7,17 +7,20 @@ import 'package:finance/bill.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../bill.dart';
+import '../Income.dart';
 
-bool isLoading = false;
 late List<Bill> Bills;
+late List<Income> Incomes;
 
 class DBhelper {
-  static const String COLUMN_ID = "id";
-  static const String COLUMN_DATE = 'date';
-  static const String COLUMN_VALUE = 'value';
-  static const String COLUMN_TYPE = 'type';
-  static const String COLUMN_NOTE = 'note';
-  static const String TABLE = 'Bill';
+  static const String ID = "id";
+  static const String DATE = 'date';
+  static const String VALUE = 'value';
+  static const String TYPE = 'type';
+  static const String NOTE = 'note';
+  static const String BILL = 'Bill';
+  static const String INCOME = 'Income';
+  static const String BALANACE = 'Balance';
 
   static final DBhelper instance = DBhelper._init();
   DBhelper._init();
@@ -39,7 +42,12 @@ class DBhelper {
       print("database has been created");
 
       await database.execute(
-          'CREATE TABLE $TABLE ($COLUMN_ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $COLUMN_DATE TEXT, $COLUMN_VALUE DOUBLE, $COLUMN_TYPE TEXT, $COLUMN_NOTE TEXT)');
+          'CREATE TABLE $BILL ($ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $DATE TEXT, $VALUE DOUBLE, $TYPE TEXT, $NOTE TEXT)');
+
+      await database.execute(
+          'CREATE TABLE $INCOME ($ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $DATE TEXT, $VALUE DOUBLE, $TYPE TEXT)');
+      await database.execute(
+          'CREATE TABLE $BALANACE ($ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $DATE TEXT, $VALUE DOUBLE)');
     });
   }
 
@@ -50,22 +58,27 @@ class DBhelper {
     String type = bill.getType();
     String note = bill.getNote();
     await db?.rawInsert(
-        'INSERT INTO $TABLE (${DBhelper.COLUMN_DATE}, ${DBhelper.COLUMN_VALUE},${DBhelper.COLUMN_TYPE},${DBhelper.COLUMN_NOTE}) VALUES (?,?,?,?)',
+        'INSERT INTO $BILL (${DBhelper.DATE}, ${DBhelper.VALUE},${DBhelper.TYPE},${DBhelper.NOTE}) VALUES (?,?,?,?)',
         [date, value, type, note]);
-    // db?.insert(
-    //   'Spend',
-    //   spend.toMap(),
-    //   conflictAlgorithm: ConflictAlgorithm.replace,
-    // );
   }
 
-  Future<List<Bill>> PrintAll() async {
+  Future<void> insertIcome(income) async {
+    final db = await instance.database;
+    String date = income.getDate();
+    double value = income.getAmount();
+    String type = income.getType();
+    await db?.rawInsert(
+        'INSERT INTO $INCOME (${DBhelper.DATE}, ${DBhelper.VALUE},${DBhelper.TYPE}) VALUES (?,?,?)',
+        [date, value, type]);
+  }
+
+  Future<List<Bill>> PrintBills() async {
     final db = await instance.database;
 
-    // Query the table for all The spend.
-    final List<Map<String, dynamic>> maps = await db!.query(TABLE);
+    // Query the table for all The bill.
+    final List<Map<String, dynamic>> maps = await db!.query(BILL);
 
-    // Convert the List<Map<String, dynamic> into a List<spend>.
+    // Convert the List<Map<String, dynamic> into a List<bill>.
     return List.generate(maps.length, (i) {
       return Bill(
           id: maps[i]['id'],
@@ -76,10 +89,27 @@ class DBhelper {
     });
   }
 
-  // ignore: non_constant_identifier_names
-  // Future<List<Map<String, dynamic>>> SpendTable() async {
-  //   final db = await instance.database;
+  Future<List<Income>> PrintIncomes() async {
+    final db = await instance.database;
 
-  //   return await db!.query('Spend');
-  // }
+    // Query the table for all The inocme.
+    final List<Map<String, dynamic>> maps = await db!.query(INCOME);
+
+    // Convert the List<Map<String, dynamic> into a List<income>.
+    return List.generate(maps.length, (i) {
+      return Income(
+        id: maps[i]['id'],
+        date: maps[i]['date'],
+        amount: maps[i]['value'],
+        type: maps[i]['type'],
+      );
+    });
+  }
+
+  Future printTotalBills() async {
+    final db = await instance.database;
+    var total;
+    total = db?.rawQuery('select SUM($VALUE) as Total from $BILL');
+    return total.toList;
+  }
 }

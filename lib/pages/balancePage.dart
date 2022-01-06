@@ -1,8 +1,7 @@
-import 'package:finance/addBill.dart';
-import 'package:finance/main.dart';
 import "package:flutter/material.dart";
 
-import 'button.dart';
+import './addBill.dart';
+import '../widgets/button.dart';
 
 class Balance extends StatefulWidget {
   @override

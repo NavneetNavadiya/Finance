@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
-import './calender.dart';
-import './button.dart';
-import 'database/db.dart';
+import '../widgets/button.dart';
+import '../database/db.dart';
+import '../Income.dart';
 
 late var _Textvalue = '0';
 late var _note = 'NO NOTE';
 late DateTime _date;
+final DateFormat formatter = DateFormat('yyyy-MM-dd');
 
 class addIncome extends StatefulWidget {
   @override
@@ -51,7 +54,13 @@ class page extends State<addIncome> {
             child: Text("التاريخ"),
           ),
           Container(
-            child: TextField(keyboardType: TextInputType.number),
+            child: TextField(
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              onChanged: (text) {
+                _Textvalue = text;
+              },
+            ),
           ),
           Container(padding: EdgeInsets.only(left: 100), child: Text("المبلغ")),
           Container(
@@ -69,20 +78,19 @@ class page extends State<addIncome> {
       ),
       bottomSheet: Container(
           width: double.infinity,
-          child: Button("اضافة", () {
+          child: Button("اضافة", () async {
+            late double _value = double.parse(_Textvalue);
+            late String _formatted = formatter.format(_date);
+            Income income = Income(
+              id: 1,
+              date: _formatted,
+              amount: _value,
+              type: 'salary',
+            );
+            await DBhelper.instance.insertIcome(income);
             print("success");
             Navigator.pop(context);
           })),
     );
-  }
-}
-
-class textController extends State {
-  TextEditingController TC = new TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }

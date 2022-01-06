@@ -54,10 +54,10 @@ class Bill {
   }
 
   Bill.fromMap(Map<String, dynamic> map) {
-    id = map[DBhelper.COLUMN_ID];
-    date = map[DBhelper.COLUMN_DATE];
-    type = map[DBhelper.COLUMN_TYPE];
-    value = map[DBhelper.COLUMN_VALUE];
-    note = map[DBhelper.COLUMN_NOTE];
+    id = map[DBhelper.ID];
+    date = map[DBhelper.DATE];
+    type = map[DBhelper.TYPE];
+    value = map[DBhelper.VALUE];
+    note = map[DBhelper.NOTE];
   }
 }

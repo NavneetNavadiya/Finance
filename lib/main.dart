@@ -1,15 +1,15 @@
 // ignore_for_file: unnecessary_new
 
-import 'package:finance/circual%20button.dart';
-import 'package:finance/incomePage.dart';
-import 'package:finance/bill.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-import './button.dart';
-import './navigation_bar.dart';
-import 'BillsPage.dart';
-import 'balancePage.dart';
+import 'database/db.dart';
+import './navigation/navigation_bar.dart';
+import './bill.dart';
+import './Income.dart';
 
+final DateFormat formatter = DateFormat('yyyy-MM');
+late double _total;
 void main() {
   runApp(MaterialApp(home: MyApp()));
 }
@@ -35,7 +35,7 @@ class MyAppState extends State<MyApp> {
           children: [
             Container(
               width: double.infinity,
-              child: Text(DateTime.now().toString()),
+              child: Text(formatter.format(DateTime.now()).toString()),
             ),
             Expanded(
               child: GridView.count(
@@ -61,13 +61,6 @@ class MyAppState extends State<MyApp> {
                   Container(
                       padding: EdgeInsets.only(left: 100, top: 50),
                       child: Text('المصاريف')),
-                  Container(
-                      padding: EdgeInsets.only(left: 100, top: 50),
-                      child: Text('')),
-                  Container(
-                    padding: EdgeInsets.only(left: 100, top: 50),
-                    child: Text('الرصيد'),
-                  )
                 ],
               ),
             )

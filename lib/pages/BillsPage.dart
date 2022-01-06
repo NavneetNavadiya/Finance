@@ -2,15 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:sqflite_common/sqlite_api.dart';
 
-import './navigation_bar.dart';
-import 'database/db.dart';
-import 'addBill.dart';
-import 'package:finance/addBill.dart';
-import 'bill.dart';
+import '../navigation/navigation_bar.dart';
+import '../database/db.dart';
+import './addBill.dart';
+import '../bill.dart';
 
-bool isLoading = false;
+bool isBillsLoading = false;
 late Bill? _bill;
 
 class Billpage extends StatefulWidget {
@@ -21,17 +19,17 @@ class Billpage extends StatefulWidget {
 }
 
 class _page extends State<Billpage> {
-  Future refreshSpends() async {
-    setState(() => isLoading = true);
+  Future refreshBills() async {
+    setState(() => isBillsLoading = true);
 
-    Bills = (await DBhelper.instance.PrintAll());
+    Bills = (await DBhelper.instance.PrintBills());
 
-    setState(() => isLoading = false);
+    setState(() => isBillsLoading = false);
   }
 
   @override
   void initState() {
-    refreshSpends();
+    refreshBills();
   }
 
   @override
@@ -40,26 +38,26 @@ class _page extends State<Billpage> {
       appBar: AppBar(
         title: Text("المصاريف"),
       ),
-      body: isLoading
+      body: isBillsLoading
           ? CircularProgressIndicator()
           : Bills.isEmpty
               ? const Text("NO BILLS!")
-              : buildSpneds(),
+              : buildBills(),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            refreshSpends();
+            refreshBills();
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => addBill()),
             );
-            refreshSpends();
+            refreshBills();
           },
           child: const Icon(Icons.add)),
       bottomNavigationBar: Nav(3),
     );
   }
 
-  Widget buildSpneds() => StaggeredGridView.countBuilder(
+  Widget buildBills() => StaggeredGridView.countBuilder(
       padding: EdgeInsets.all(8),
       itemCount: Bills.length,
       staggeredTileBuilder: (index) => StaggeredTile.fit(2),

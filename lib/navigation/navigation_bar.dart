@@ -1,15 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:finance/incomePage.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:finance/pages/incomePage.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-import 'package:finance/addBill.dart';
-import 'package:finance/addIncome.dart';
+import 'package:finance/pages/addBill.dart';
+import 'package:finance/pages/addIncome.dart';
 import 'package:finance/bill.dart';
-import 'BillsPage.dart';
-import 'balancePage.dart';
-import 'main.dart';
+import '../pages/BillsPage.dart';
+import '../pages/balancePage.dart';
+import '../main.dart';
 
 class Nav extends StatelessWidget {
   int number;

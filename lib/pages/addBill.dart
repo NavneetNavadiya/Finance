@@ -1,12 +1,10 @@
-import 'package:finance/main.dart';
 import 'package:finance/bill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-import './calender.dart';
-import './button.dart';
-import 'database/db.dart';
+import '../widgets/button.dart';
+import '../database/db.dart';
 
 class addBill extends StatefulWidget {
   @override
@@ -94,10 +92,14 @@ class page extends State<addBill> {
       bottomSheet: Container(
           width: double.infinity,
           child: Button("اضافة", () async {
-            late double value = double.parse(_Textvalue);
-            late String formatted = formatter.format(_date);
+            late double _value = double.parse(_Textvalue);
+            late String _formatted = formatter.format(_date);
             Bill bill = Bill(
-                id: 1, date: formatted, value: value, type: 'car', note: _note);
+                id: 1,
+                date: _formatted,
+                value: _value,
+                type: 'car',
+                note: _note);
             await DBhelper.instance.insertBill(bill);
             print("success");
 
