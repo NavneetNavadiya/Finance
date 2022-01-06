@@ -5,6 +5,7 @@ import '../../navigation/navigation_bar.dart';
 import '../database/db.dart';
 import 'addIncome.dart';
 import '../Income.dart';
+import '../widgets/Card.dart';
 
 bool isIncomeLoading = false;
 late Income? _income;
@@ -40,7 +41,7 @@ class _page extends State<IncomePage> {
           ? CircularProgressIndicator()
           : Incomes.isEmpty
               ? const Text("NO INCOMES!")
-              : buildInomes(),
+              : buildIncomes(),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
             refreshIncome();
@@ -55,7 +56,7 @@ class _page extends State<IncomePage> {
     );
   }
 
-  Widget buildInomes() => StaggeredGridView.countBuilder(
+  Widget buildIncomes() => StaggeredGridView.countBuilder(
       padding: EdgeInsets.all(8),
       itemCount: Incomes.length,
       staggeredTileBuilder: (index) => StaggeredTile.fit(2),
@@ -65,23 +66,13 @@ class _page extends State<IncomePage> {
       itemBuilder: (context, index) {
         _income = Incomes[index];
 
+        String _id = _income!.getID().toString();
+        String _date = _income!.getDate();
+        String _type = _income!.getType();
+        String _amount = _income!.getAmount().toString();
+        String _note = '';
         if (_income != null) {
-          return Card(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                ListTile(
-                  title: Text(_income!.getID().toString() +
-                      ' Date: ' +
-                      _income!.getDate() +
-                      '\nType :' +
-                      _income!.getType()),
-                  subtitle: Text(
-                      'Amount of income: ' + _income!.getAmount().toString()),
-                ),
-              ],
-            ),
-          );
+          return list(_id, _date, _type, _amount, _note);
         } else
           return Text('NO INCOMES');
       });

@@ -108,8 +108,8 @@ class DBhelper {
 
   Future printTotalBills() async {
     final db = await instance.database;
-    var total;
-    total = db?.rawQuery('select SUM($VALUE) as Total from $BILL');
-    return total.toList;
+    final result = await db?.rawQuery('select SUM($VALUE) from $BILL');
+    double total = result![0]['SUM($VALUE)'];
+    return total.toString();
   }
 }

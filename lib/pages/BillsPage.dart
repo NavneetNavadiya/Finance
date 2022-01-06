@@ -7,6 +7,7 @@ import '../navigation/navigation_bar.dart';
 import '../database/db.dart';
 import './addBill.dart';
 import '../bill.dart';
+import '../widgets/Card.dart';
 
 bool isBillsLoading = false;
 late Bill? _bill;
@@ -67,25 +68,14 @@ class _page extends State<Billpage> {
       itemBuilder: (context, index) {
         _bill = Bills[index];
 
+        String _id = _bill!.getID().toString();
+        String _date = _bill!.getDate();
+        String _type = _bill!.getType();
+        String _amount = _bill!.getValue().toString();
+        String _note = _bill!.getNote();
+
         if (_bill != null) {
-          return Card(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                ListTile(
-                  title: Text(_bill!.getID().toString() +
-                      ' Date: ' +
-                      _bill!.getDate() +
-                      '\nType :' +
-                      _bill!.getType()),
-                  subtitle: Text('spend: ' +
-                      _bill!.getValue().toString() +
-                      '\nNote: ' +
-                      _bill!.getNote()),
-                ),
-              ],
-            ),
-          );
+          return list(_id, _date, _type, _amount, _note);
         } else
           return Text('no bills');
       });

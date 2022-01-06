@@ -9,7 +9,7 @@ import './bill.dart';
 import './Income.dart';
 
 final DateFormat formatter = DateFormat('yyyy-MM');
-late double _total;
+late var total;
 void main() {
   runApp(MaterialApp(home: MyApp()));
 }
@@ -57,7 +57,7 @@ class MyAppState extends State<MyApp> {
                       child: Text('اجمالي الرصيد')),
                   Container(
                       padding: EdgeInsets.only(left: 100, top: 50),
-                      child: Text('')),
+                      child: showItime()),
                   Container(
                       padding: EdgeInsets.only(left: 100, top: 50),
                       child: Text('المصاريف')),
@@ -69,5 +69,14 @@ class MyAppState extends State<MyApp> {
         bottomNavigationBar: Nav(2),
       ),
     );
+  }
+
+  void getTotal() async {
+    total = await DBhelper.instance.printTotalBills();
+  }
+
+  Widget showItime() {
+    getTotal();
+    return Text(total != null ? total : 'watting ');
   }
 }
