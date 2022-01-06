@@ -9,7 +9,7 @@ import './bill.dart';
 import './Income.dart';
 
 final DateFormat formatter = DateFormat('yyyy-MM');
-late var total;
+late var total = '';
 void main() {
   runApp(MaterialApp(home: MyApp()));
 }
