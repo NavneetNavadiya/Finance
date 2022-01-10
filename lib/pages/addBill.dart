@@ -101,6 +101,9 @@ class page extends State<addBill> {
                 type: 'car',
                 note: _note);
             await DBhelper.instance.insertBill(bill);
+            DBhelper.instance.getBillsTotal();
+            DBhelper.instance.getTotalBalance();
+            DBhelper.instance.getAvrage();
             Bills = (await DBhelper.instance.PrintBills());
             print("success");
 

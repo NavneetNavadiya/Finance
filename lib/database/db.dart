@@ -104,7 +104,9 @@ class DBhelper {
     await db?.rawInsert(
         'INSERT INTO $INCOME (${DBhelper.DATE}, ${DBhelper.VALUE},${DBhelper.TYPE}) VALUES (?,?,?)',
         [date, value, type]);
+    getBillsTotal();
     getTotalBalance();
+    getAvrage();
   }
 
   Future<List<Bill>> PrintBills() async {
@@ -150,7 +152,7 @@ class DBhelper {
 
   Future printTotalIncome() async {
     final db = await instance.database;
-    final result = await db?.rawQuery('select SUM($VALUE) from $BILL');
+    final result = await db?.rawQuery('select SUM($VALUE) from $BALANACE');
     double total = result![0]['SUM($VALUE)'];
     return total.toString();
   }
@@ -159,14 +161,13 @@ class DBhelper {
     final db = await instance.database;
     final _result = await db?.rawQuery('SELECT AVG($VALUE) from $BILL');
     avg = _result![0]['AVG($VALUE)'].toString();
-    return avg;
   }
 
-  void getBillsTotal() async {
+  getBillsTotal() async {
     bill = await printTotalBills();
   }
 
-  void getTotalBalance() async {
+  getTotalBalance() async {
     balance = await getBalance();
   }
 }
