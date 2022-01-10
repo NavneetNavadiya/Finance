@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../config/colors.dart';
+import '../config/size.dart';
 
 class list extends StatelessWidget {
   late String _id;
@@ -11,6 +13,15 @@ class list extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.blue[50],
+      borderOnForeground: false,
+      semanticContainer: true,
+      elevation: 10,
+      shadowColor: Colors.black,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.transparent, width: 1),
+        borderRadius: BorderRadius.circular(30),
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
