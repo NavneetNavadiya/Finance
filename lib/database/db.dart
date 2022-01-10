@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:finance/bill.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../bill.dart';
@@ -11,6 +12,10 @@ import '../Income.dart';
 
 late List<Bill> Bills;
 late List<Income> Incomes;
+late var bill = '';
+late var income = '';
+late var balance = '';
+late var avg = '';
 
 class DBhelper {
   static const String ID = "id";
@@ -48,6 +53,9 @@ class DBhelper {
           'CREATE TABLE $INCOME ($ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $DATE TEXT, $VALUE DOUBLE, $TYPE TEXT)');
       await database.execute(
           'CREATE TABLE $BALANACE ($ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $DATE TEXT, $VALUE DOUBLE)');
+      await database.rawInsert(
+          'INSERT INTO $BALANACE (${DBhelper.DATE},${DBhelper.VALUE}) VALUES (?,?)',
+          ['', 0]);
     });
   }
 
@@ -57,9 +65,27 @@ class DBhelper {
     double value = bill.getValue();
     String type = bill.getType();
     String note = bill.getNote();
+    var balanceResult = await db
+        ?.rawQuery('SELECT $VALUE FROM $BALANACE ORDER BY $ID DESC LIMIT 1');
+    double _balance = balanceResult![0][VALUE];
+    _balance = _balance - value;
+    await db?.rawInsert(
+        'INSERT INTO $BALANACE (${DBhelper.DATE},${DBhelper.VALUE}) VALUES (?,?)',
+        [date, _balance]);
     await db?.rawInsert(
         'INSERT INTO $BILL (${DBhelper.DATE}, ${DBhelper.VALUE},${DBhelper.TYPE},${DBhelper.NOTE}) VALUES (?,?,?,?)',
         [date, value, type, note]);
+    getBillsTotal();
+    getTotalBalance();
+    getAvrage();
+  }
+
+  Future getBalance() async {
+    final db = await instance.database;
+    var balanceResult = await db
+        ?.rawQuery('SELECT $VALUE FROM $BALANACE ORDER BY $ID DESC LIMIT 1');
+    double _balance = balanceResult![0][VALUE];
+    return _balance.toString();
   }
 
   Future<void> insertIcome(income) async {
@@ -67,9 +93,18 @@ class DBhelper {
     String date = income.getDate();
     double value = income.getAmount();
     String type = income.getType();
+    var balanceResult = await db
+        ?.rawQuery('SELECT $VALUE FROM $BALANACE ORDER BY $ID DESC LIMIT 1');
+    double _balance = balanceResult![0][VALUE];
+    _balance = _balance + value;
+    await db?.rawInsert(
+        'INSERT INTO $BALANACE (${DBhelper.DATE},${DBhelper.VALUE}) VALUES (?,?)',
+        [date, _balance]);
+
     await db?.rawInsert(
         'INSERT INTO $INCOME (${DBhelper.DATE}, ${DBhelper.VALUE},${DBhelper.TYPE}) VALUES (?,?,?)',
         [date, value, type]);
+    getTotalBalance();
   }
 
   Future<List<Bill>> PrintBills() async {
@@ -111,5 +146,27 @@ class DBhelper {
     final result = await db?.rawQuery('select SUM($VALUE) from $BILL');
     double total = result![0]['SUM($VALUE)'];
     return total.toString();
+  }
+
+  Future printTotalIncome() async {
+    final db = await instance.database;
+    final result = await db?.rawQuery('select SUM($VALUE) from $BILL');
+    double total = result![0]['SUM($VALUE)'];
+    return total.toString();
+  }
+
+  Future getAvrage() async {
+    final db = await instance.database;
+    final _result = await db?.rawQuery('SELECT AVG($VALUE) from $BILL');
+    avg = _result![0]['AVG($VALUE)'].toString();
+    return avg;
+  }
+
+  void getBillsTotal() async {
+    bill = await printTotalBills();
+  }
+
+  void getTotalBalance() async {
+    balance = await getBalance();
   }
 }

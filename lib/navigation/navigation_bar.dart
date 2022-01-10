@@ -37,7 +37,6 @@ class Nav extends StatelessWidget {
             semanticLabel: 'Home',
           ),
           Icon(Icons.line_style_outlined, size: 30),
-          Icon(Icons.camera_outlined, size: 30),
           Icon(Icons.remove_circle_outline_sharp,
               size: 30, color: Colors.black),
         ],
@@ -64,7 +63,7 @@ class Nav extends StatelessWidget {
                 new MaterialPageRoute(builder: (context) => new Billpage()));
           }
 
-          if (index == 5) {
+          if (index == 4) {
             Navigator.push(context,
                 new MaterialPageRoute(builder: (context) => new addBill()));
           }

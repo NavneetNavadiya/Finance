@@ -101,6 +101,7 @@ class page extends State<addBill> {
                 type: 'car',
                 note: _note);
             await DBhelper.instance.insertBill(bill);
+            Bills = (await DBhelper.instance.PrintBills());
             print("success");
 
             Navigator.pop(context);

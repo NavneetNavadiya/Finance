@@ -1,15 +1,12 @@
-// ignore_for_file: unnecessary_new
+// ignore_for_file: unnecessary_new, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'database/db.dart';
 import './navigation/navigation_bar.dart';
-import './bill.dart';
-import './Income.dart';
 
 final DateFormat formatter = DateFormat('yyyy-MM');
-late var total = '';
+
 void main() {
   runApp(MaterialApp(home: MyApp()));
 }
@@ -45,19 +42,19 @@ class MyAppState extends State<MyApp> {
                 children: <Widget>[
                   Container(
                       padding: EdgeInsets.only(left: 100, top: 50),
-                      child: Text("654156")),
+                      child: showBalance()),
                   Container(
                       padding: EdgeInsets.only(left: 100, top: 50),
                       child: Text('الرصيد')),
                   Container(
                       padding: EdgeInsets.only(left: 100, top: 50),
-                      child: Text('')),
+                      child: showAVg()),
                   Container(
                       padding: EdgeInsets.only(left: 100, top: 50),
-                      child: Text('اجمالي الرصيد')),
+                      child: Text('avg')),
                   Container(
                       padding: EdgeInsets.only(left: 100, top: 50),
-                      child: showItime()),
+                      child: showBillsTotal()),
                   Container(
                       padding: EdgeInsets.only(left: 100, top: 50),
                       child: Text('المصاريف')),
@@ -66,17 +63,25 @@ class MyAppState extends State<MyApp> {
             )
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {}, child: const Icon(Icons.camera_alt_outlined)),
         bottomNavigationBar: Nav(2),
       ),
     );
   }
 
-  void getTotal() async {
-    total = await DBhelper.instance.printTotalBills();
+  Widget showBillsTotal() {
+    DBhelper.instance.getBillsTotal();
+    return Text(bill != '' ? bill : 'watting ');
   }
 
-  Widget showItime() {
-    getTotal();
-    return Text(total != null ? total : 'watting ');
+  Widget showBalance() {
+    DBhelper.instance.getTotalBalance();
+    return Text(balance != '' ? balance : 'watting ');
+  }
+
+  Widget showAVg() {
+    DBhelper.instance.getAvrage();
+    return Text(avg != '' ? avg : 'watting ');
   }
 }

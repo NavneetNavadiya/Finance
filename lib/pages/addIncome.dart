@@ -88,6 +88,7 @@ class page extends State<addIncome> {
               type: 'salary',
             );
             await DBhelper.instance.insertIcome(income);
+            Incomes = (await DBhelper.instance.PrintIncomes());
             print("success");
             Navigator.pop(context);
           })),
