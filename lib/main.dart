@@ -8,6 +8,7 @@ import 'database/db.dart';
 import 'Income.dart';
 import 'bill.dart';
 import './widgets/Credit card.dart';
+import 'widgets/text.dart';
 
 final DateFormat formatter = DateFormat('yyyy-MM');
 var _isLoading = false;
@@ -49,22 +50,41 @@ class MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "Finance",
       theme: ThemeData(
-        brightness: Brightness.light,
-        shadowColor: Colors.amber,
-        scaffoldBackgroundColor: Colors.blueGrey[50],
-        backgroundColor: Colors.amber,
-        splashColor: Colors.yellow,
-        // appBarTheme: AppBarTheme(backgroundColor: Color(0xFF101427))
-      ),
+          brightness: Brightness.light,
+          shadowColor: Colors.amber,
+          scaffoldBackgroundColor: Colors.blueGrey[50],
+          backgroundColor: Colors.amber,
+          splashColor: Colors.yellow,
+          appBarTheme: AppBarTheme(backgroundColor: Colors.indigo)),
       home: Scaffold(
         appBar: AppBar(title: Text("home")),
-        body: Container(
-            child: _isLoading
-                ? CircularProgressIndicator()
-                : Bills.isEmpty || Incomes.isEmpty
-                    ? const Text(
-                        "there no data on about your income or bills pleas add them to create an analysis")
-                    : Credit(balance)),
+        body: Column(
+          children: [
+            Container(
+                child: _isLoading
+                    ? CircularProgressIndicator()
+                    : Bills.isEmpty || Incomes.isEmpty
+                        ? const Text(
+                            "there no data on about your income or bills pleas add them to create an analysis")
+                        : Credit(balance)),
+            Expanded(
+              child: GridView.count(
+                  crossAxisCount: 2,
+                  childAspectRatio: .99,
+                  crossAxisSpacing: 20.0,
+                  mainAxisSpacing: 1.0,
+                  children: <Widget>[
+                    Column(
+                      //data of analysis
+                      children: [
+                        text('average of sepnd:' + avg),
+                        Text('total sepnd:' + bill)
+                      ],
+                    ) //data of analysis
+                  ]),
+            )
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
             onPressed: () {}, child: const Icon(Icons.camera_alt_outlined)),
         bottomNavigationBar: Nav(2),
@@ -76,11 +96,7 @@ class MyAppState extends State<MyApp> {
   //   return Text(bill != '' ? bill : 'no data ');
   // }
 
-  // Widget showBalance() {
-  //   return Text(balance != '' ? balance : 'no data ');
-  // }
-
-  // Widget showAVg() {
-  //   return Text(avg != '' ? avg : 'no data ');
-  // }
+  Widget showAVg() {
+    return Text(avg != '' ? avg : 'no data ');
+  }
 }

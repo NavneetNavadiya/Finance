@@ -42,7 +42,7 @@ class Nav extends StatelessWidget {
         ],
         color: Colors.cyan.shade50,
         buttonBackgroundColor: Colors.blue,
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.indigo,
         animationCurve: Curves.easeInOut,
         animationDuration: Duration(milliseconds: 600),
         onTap: (index) {

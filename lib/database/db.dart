@@ -12,10 +12,10 @@ import '../Income.dart';
 
 late List<Bill> Bills;
 late List<Income> Incomes;
-late var bill = '';
-late var income = '';
-late var balance = '';
-late var avg = '';
+late var bill = '0.0';
+late var income = '0.0';
+late var balance = '0.0';
+late var avg = '0.0';
 
 class DBhelper {
   static const String ID = "id";
