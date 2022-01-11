@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../config/colors.dart';
-import '../config/size.dart';
 
 class list extends StatelessWidget {
   late String _id;

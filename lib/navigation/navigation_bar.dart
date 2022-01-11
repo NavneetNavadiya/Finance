@@ -1,12 +1,12 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:finance/pages/incomePage.dart';
 import 'package:flutter/material.dart';
 
-import 'package:finance/pages/addBill.dart';
-import 'package:finance/pages/addIncome.dart';
-import 'package:finance/bill.dart';
+import '../pages/addBill.dart';
+import '../pages/addIncome.dart';
 import '../pages/BillsPage.dart';
-import '../pages/balancePage.dart';
 import '../main.dart';
 
 class Nav extends StatelessWidget {
@@ -40,32 +40,32 @@ class Nav extends StatelessWidget {
           Icon(Icons.remove_circle_outline_sharp,
               size: 30, color: Colors.black),
         ],
-        color: Colors.white,
+        color: Colors.cyan.shade50,
         buttonBackgroundColor: Colors.blue,
         backgroundColor: Colors.blueGrey,
         animationCurve: Curves.easeInOut,
         animationDuration: Duration(milliseconds: 600),
         onTap: (index) {
           if (index == 0) {
-            Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => new addIncome()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => addIncome()));
           }
           if (index == 1) {
-            Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => new IncomePage()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => IncomePage()));
           }
           if (index == 2) {
-            Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => new MyApp()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MyApp()));
           }
           if (index == 3) {
-            Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => new Billpage()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Billpage()));
           }
 
           if (index == 4) {
-            Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => new addBill()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => addBill()));
           }
         },
         letIndexChange: (index) => true,

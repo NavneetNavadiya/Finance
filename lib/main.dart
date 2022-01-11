@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new, prefer_const_constructors
+// ignore_for_file: unnecessary_new, prefer_const_constructors, unnecessary_string_escapes
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +7,7 @@ import './navigation/navigation_bar.dart';
 import 'database/db.dart';
 import 'Income.dart';
 import 'bill.dart';
+import './widgets/Credit card.dart';
 
 final DateFormat formatter = DateFormat('yyyy-MM');
 var _isLoading = false;
@@ -63,7 +64,7 @@ class MyAppState extends State<MyApp> {
                 : Bills.isEmpty || Incomes.isEmpty
                     ? const Text(
                         "there no data on about your income or bills pleas add them to create an analysis")
-                    : buildpage()),
+                    : Credit(balance)),
         floatingActionButton: FloatingActionButton(
             onPressed: () {}, child: const Icon(Icons.camera_alt_outlined)),
         bottomNavigationBar: Nav(2),
@@ -71,60 +72,15 @@ class MyAppState extends State<MyApp> {
     );
   }
 
-  Widget buildpage() {
-    return SizedBox(
-        child: Container(
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                  color: Colors.blue[900]!.withOpacity(0.2),
-                  blurRadius: 50,
-                  spreadRadius: 2,
-                  offset: Offset(20, 0)),
-              BoxShadow(
-                  color: Colors.white12,
-                  blurRadius: 0,
-                  spreadRadius: -2,
-                  offset: Offset(0, 0)),
-            ], shape: BoxShape.circle, color: Colors.white30),
-            height: 200,
-            child: Card(
-              color: Colors.blue[50],
-              borderOnForeground: false,
-              semanticContainer: true,
-              elevation: 5,
-              margin: EdgeInsets.all(10),
-              shadowColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.transparent, width: 1),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    title: Text(' Date: ' +
-                        formatter.format(DateTime.now()) +
-                        '\n\n    Balance:  '.toUpperCase() +
-                        balance +
-                        '\n' '    Total spend: '.toUpperCase() +
-                        bill +
-                        '\n    avg: '.toUpperCase() +
-                        avg),
-                  ),
-                ],
-              ),
-            )));
-  }
+  // Widget showBillsTotal() {
+  //   return Text(bill != '' ? bill : 'no data ');
+  // }
 
-  Widget showBillsTotal() {
-    return Text(bill != '' ? bill : 'no data ');
-  }
+  // Widget showBalance() {
+  //   return Text(balance != '' ? balance : 'no data ');
+  // }
 
-  Widget showBalance() {
-    return Text(balance != '' ? balance : 'no data ');
-  }
-
-  Widget showAVg() {
-    return Text(avg != '' ? avg : 'no data ');
-  }
+  // Widget showAVg() {
+  //   return Text(avg != '' ? avg : 'no data ');
+  // }
 }

@@ -48,7 +48,6 @@ class DBhelper {
 
       await database.execute(
           'CREATE TABLE $BILL ($ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $DATE TEXT, $VALUE DOUBLE, $TYPE TEXT, $NOTE TEXT)');
-
       await database.execute(
           'CREATE TABLE $INCOME ($ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $DATE TEXT, $VALUE DOUBLE, $TYPE TEXT)');
       await database.execute(
