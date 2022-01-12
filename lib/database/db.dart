@@ -10,8 +10,6 @@ import 'package:sqflite/sqflite.dart';
 import '../bill.dart';
 import '../Income.dart';
 
-late List<Bill> Bills;
-late List<Income> Incomes;
 late var bill = '0.0';
 late var income = '0.0';
 late var balance = '0.0';

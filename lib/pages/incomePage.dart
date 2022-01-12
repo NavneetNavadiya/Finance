@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../../navigation/navigation_bar.dart';
 import '../database/db.dart';
 import 'addIncome.dart';
 import '../Income.dart';
 import '../widgets/Card.dart';
+import '../main.dart';
 
 bool isIncomeLoading = false;
 late Income? _income;
@@ -45,14 +45,13 @@ class _page extends State<IncomePage> {
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
             refreshIncome();
-            Navigator.push(
+            await Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => addIncome()),
             );
             refreshIncome();
           },
           child: const Icon(Icons.add)),
-      bottomNavigationBar: Nav(1),
     );
   }
 

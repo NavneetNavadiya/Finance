@@ -1,102 +1,96 @@
-// ignore_for_file: unnecessary_new, prefer_const_constructors, unnecessary_string_escapes
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names
 
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:finance/pages/incomePage.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import './navigation/navigation_bar.dart';
 
-import 'database/db.dart';
+import './pages/BillsPage.dart';
+import 'pages/mainpage.dart';
 import 'Income.dart';
 import 'bill.dart';
-import './widgets/Credit card.dart';
-import 'widgets/text.dart';
+import 'database/db.dart';
 
-final DateFormat formatter = DateFormat('yyyy-MM');
-var _isLoading = false;
 late List<Bill> Bills;
 late List<Income> Incomes;
+Future refreshall() async {
+  Bills = await DBhelper.instance.PrintBills();
+  Incomes = (await DBhelper.instance.PrintIncomes());
+}
+
 void main() {
-  runApp(MyApp());
+  refreshall();
+  runApp(app());
+}
+
+class app extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: "Finance",
+        theme: ThemeData(
+            brightness: Brightness.light,
+            shadowColor: Colors.amber,
+            scaffoldBackgroundColor: Colors.blueGrey[50],
+            backgroundColor: Colors.amber,
+            splashColor: Colors.yellow,
+            appBarTheme: AppBarTheme(backgroundColor: Colors.indigo)),
+        home: MyApp());
+  }
 }
 
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return MyAppState();
+    return _Nav();
   }
 }
 
-// This widget is the root of your application.
-class MyAppState extends State<MyApp> {
-  Future refreshMainPage() async {
-    setState(() => _isLoading = true);
-
-    Incomes = await DBhelper.instance.PrintIncomes();
+class _Nav extends State<MyApp> {
+  Future refreshall() async {
     Bills = await DBhelper.instance.PrintBills();
-    await DBhelper.instance.getBillsTotal();
-    await DBhelper.instance.getTotalBalance();
-    await DBhelper.instance.getAvrage();
-
-    setState(() => _isLoading = false);
+    Incomes = await DBhelper.instance.PrintIncomes();
   }
 
-  @override
-  void initState() {
-    refreshMainPage();
+  late int index = 1;
+  void _onItemTapped(int _index) {
+    setState(() {
+      index = _index;
+    });
   }
+
+  late final List<Widget> _Pages = <Widget>[
+    IncomePage(),
+    MainPage(),
+    Billpage(),
+  ];
+  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Finance",
-      theme: ThemeData(
-          brightness: Brightness.light,
-          shadowColor: Colors.amber,
-          scaffoldBackgroundColor: Colors.blueGrey[50],
-          backgroundColor: Colors.amber,
-          splashColor: Colors.yellow,
-          appBarTheme: AppBarTheme(backgroundColor: Colors.indigo)),
-      home: Scaffold(
-        appBar: AppBar(title: Text("home")),
-        body: Column(
-          children: [
-            Container(
-                child: _isLoading
-                    ? CircularProgressIndicator()
-                    : Bills.isEmpty || Incomes.isEmpty
-                        ? const Text(
-                            "there no data on about your income or bills pleas add them to create an analysis")
-                        : Credit(balance)),
-            Expanded(
-              child: GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio: .99,
-                  crossAxisSpacing: 20.0,
-                  mainAxisSpacing: 1.0,
-                  children: <Widget>[
-                    Column(
-                      //data of analysis
-                      children: [
-                        text('average of sepnd:' + avg),
-                        Text('total sepnd:' + bill)
-                      ],
-                    ) //data of analysis
-                  ]),
-            )
+    refreshall();
+    return Scaffold(
+      body: _Pages.elementAt(index),
+      bottomNavigationBar: CurvedNavigationBar(
+          key: _bottomNavigationKey,
+          index: index,
+          height: 60.0,
+          items: <Widget>[
+            Icon(
+              Icons.list_alt_sharp,
+              size: 30,
+            ),
+            Icon(
+              Icons.home,
+              size: 30,
+            ),
+            Icon(Icons.line_style_outlined, size: 30),
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () {}, child: const Icon(Icons.camera_alt_outlined)),
-        bottomNavigationBar: Nav(2),
-      ),
+          color: Colors.cyan.shade50,
+          buttonBackgroundColor: Colors.blue,
+          backgroundColor: Colors.indigo,
+          animationCurve: Curves.easeInOut,
+          animationDuration: Duration(milliseconds: 600),
+          onTap: _onItemTapped),
     );
-  }
-
-  // Widget showBillsTotal() {
-  //   return Text(bill != '' ? bill : 'no data ');
-  // }
-
-  Widget showAVg() {
-    return Text(avg != '' ? avg : 'no data ');
   }
 }

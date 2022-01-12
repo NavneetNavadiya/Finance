@@ -5,16 +5,17 @@ import 'package:intl/intl.dart';
 
 import '../widgets/button.dart';
 import '../database/db.dart';
+import '../main.dart';
 
 class addBill extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return page();
+    return addBillpage();
   }
 }
 
-class page extends State<addBill> {
+class addBillpage extends State<addBill> {
   String catagories = 'اختارنوع المصروف';
   late var _Textvalue = '0';
   late var _note = 'NO NOTE';
@@ -106,19 +107,8 @@ class page extends State<addBill> {
             DBhelper.instance.getAvrage();
             Bills = (await DBhelper.instance.PrintBills());
             print("success");
-
             Navigator.pop(context);
           })),
     );
-  }
-}
-
-class textController extends State {
-  TextEditingController TC = new TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../widgets/button.dart';
 import '../database/db.dart';
 import '../Income.dart';
+import '../main.dart';
 
 late var _Textvalue = '0';
 late var _note = 'NO NOTE';
@@ -88,9 +89,9 @@ class page extends State<addIncome> {
               type: 'salary',
             );
             await DBhelper.instance.insertIcome(income);
-            DBhelper.instance.getTotalBalance();
-            DBhelper.instance.getAvrage();
             Incomes = (await DBhelper.instance.PrintIncomes());
+            await DBhelper.instance.getTotalBalance();
+            await DBhelper.instance.getAvrage();
             print("success");
             Navigator.pop(context);
           })),

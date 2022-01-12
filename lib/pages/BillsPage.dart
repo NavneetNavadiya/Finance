@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../navigation/navigation_bar.dart';
 import '../database/db.dart';
 import './addBill.dart';
 import '../bill.dart';
 import '../widgets/Card.dart';
+import '../main.dart';
 
 bool isBillsLoading = false;
 late Bill? _bill;
@@ -47,14 +47,13 @@ class _page extends State<Billpage> {
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
             refreshBills();
-            Navigator.push(
+            await Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => addBill()),
             );
             refreshBills();
           },
           child: const Icon(Icons.add)),
-      bottomNavigationBar: Nav(3),
     );
   }
 
