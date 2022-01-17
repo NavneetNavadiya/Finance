@@ -12,17 +12,23 @@ import 'database/db.dart';
 
 late List<Bill> Bills;
 late List<Income> Incomes;
-Future refreshall() async {
-  Bills = await DBhelper.instance.PrintBills();
-  Incomes = (await DBhelper.instance.PrintIncomes());
-}
 
 void main() {
-  refreshall();
   runApp(app());
 }
 
 class app extends StatelessWidget {
+  void _refresh() async {
+    DBhelper.instance.getAvrage();
+    DBhelper.instance.getBillsTotal();
+    DBhelper.instance.getTotalBalance();
+  }
+
+  @override
+  void initState() {
+    _refresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,14 +52,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _Nav extends State<MyApp> {
-  Future refreshall() async {
-    Bills = await DBhelper.instance.PrintBills();
-    Incomes = await DBhelper.instance.PrintIncomes();
-  }
-
   late int index = 1;
   void _onItemTapped(int _index) {
     setState(() {
+      DBhelper.instance.getAvrage();
+      DBhelper.instance.getBillsTotal();
+      DBhelper.instance.getTotalBalance();
       index = _index;
     });
   }
@@ -67,7 +71,6 @@ class _Nav extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    refreshall();
     return Scaffold(
       body: _Pages.elementAt(index),
       bottomNavigationBar: CurvedNavigationBar(

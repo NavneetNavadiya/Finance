@@ -23,7 +23,7 @@ class DBhelper {
   static const String NOTE = 'note';
   static const String BILL = 'Bill';
   static const String INCOME = 'Income';
-  static const String BALANACE = 'Balance';
+  static const String BALANCE = 'Balance';
 
   static final DBhelper instance = DBhelper._init();
   DBhelper._init();
@@ -49,9 +49,9 @@ class DBhelper {
       await database.execute(
           'CREATE TABLE $INCOME ($ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $DATE TEXT, $VALUE DOUBLE, $TYPE TEXT)');
       await database.execute(
-          'CREATE TABLE $BALANACE ($ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $DATE TEXT, $VALUE DOUBLE)');
+          'CREATE TABLE $BALANCE ($ID  INTEGER PRIMARY KEY AUTOINCREMENT  , $DATE TEXT, $VALUE DOUBLE)');
       await database.rawInsert(
-          'INSERT INTO $BALANACE (${DBhelper.DATE},${DBhelper.VALUE}) VALUES (?,?)',
+          'INSERT INTO $BALANCE (${DBhelper.DATE},${DBhelper.VALUE}) VALUES (?,?)',
           ['', 0]);
     });
   }
@@ -63,11 +63,11 @@ class DBhelper {
     String type = bill.getType();
     String note = bill.getNote();
     var balanceResult = await db
-        ?.rawQuery('SELECT $VALUE FROM $BALANACE ORDER BY $ID DESC LIMIT 1');
-    double _balance = balanceResult![0][VALUE];
+        ?.rawQuery('SELECT $VALUE FROM $BALANCE ORDER BY $ID DESC LIMIT 1');
+    double _balance = balanceResult![0][VALUE] as double;
     _balance = _balance - value;
     await db?.rawInsert(
-        'INSERT INTO $BALANACE (${DBhelper.DATE},${DBhelper.VALUE}) VALUES (?,?)',
+        'INSERT INTO $BALANCE (${DBhelper.DATE},${DBhelper.VALUE}) VALUES (?,?)',
         [date, _balance]);
     await db?.rawInsert(
         'INSERT INTO $BILL (${DBhelper.DATE}, ${DBhelper.VALUE},${DBhelper.TYPE},${DBhelper.NOTE}) VALUES (?,?,?,?)',
@@ -80,8 +80,8 @@ class DBhelper {
   Future getBalance() async {
     final db = await instance.database;
     var balanceResult = await db
-        ?.rawQuery('SELECT $VALUE FROM $BALANACE ORDER BY $ID DESC LIMIT 1');
-    double _balance = balanceResult![0][VALUE];
+        ?.rawQuery('SELECT $VALUE FROM $BALANCE ORDER BY $ID DESC LIMIT 1');
+    double _balance = balanceResult![0][VALUE] as double;
     return _balance.toString();
   }
 
@@ -91,11 +91,11 @@ class DBhelper {
     double value = income.getAmount();
     String type = income.getType();
     var balanceResult = await db
-        ?.rawQuery('SELECT $VALUE FROM $BALANACE ORDER BY $ID DESC LIMIT 1');
-    double _balance = balanceResult![0][VALUE];
+        ?.rawQuery('SELECT $VALUE FROM $BALANCE ORDER BY $ID DESC LIMIT 1');
+    double _balance = balanceResult![0][VALUE] as double;
     _balance = _balance + value;
     await db?.rawInsert(
-        'INSERT INTO $BALANACE (${DBhelper.DATE},${DBhelper.VALUE}) VALUES (?,?)',
+        'INSERT INTO $BALANCE (${DBhelper.DATE},${DBhelper.VALUE}) VALUES (?,?)',
         [date, _balance]);
 
     await db?.rawInsert(
@@ -143,14 +143,14 @@ class DBhelper {
   Future printTotalBills() async {
     final db = await instance.database;
     final result = await db?.rawQuery('select SUM($VALUE) from $BILL');
-    double total = result![0]['SUM($VALUE)'];
+    double total = result![0]['SUM($VALUE)'] as double;
     return total.toString();
   }
 
   Future printTotalIncome() async {
     final db = await instance.database;
-    final result = await db?.rawQuery('select SUM($VALUE) from $BALANACE');
-    double total = result![0]['SUM($VALUE)'];
+    final result = await db?.rawQuery('select SUM($VALUE) from $BALANCE');
+    double total = result![0]['SUM($VALUE)'] as double;
     return total.toString();
   }
 
