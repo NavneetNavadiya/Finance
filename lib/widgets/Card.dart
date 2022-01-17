@@ -18,7 +18,7 @@ class list extends StatelessWidget {
       shadowColor: Colors.black,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.transparent, width: 1),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(0),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

@@ -19,7 +19,7 @@ class addBillpage extends State<addBill> {
   String catagories = 'اختارنوع المصروف';
   late var _Textvalue = '0';
   late var _note = 'NO NOTE';
-  late DateTime _date;
+  late DateTime _date = DateTime.now();
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   @override
   Widget build(BuildContext context) {
@@ -28,66 +28,72 @@ class addBillpage extends State<addBill> {
       appBar: AppBar(
         title: Text("اضافة مصروف"),
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: .99,
-        crossAxisSpacing: 20.0,
-        mainAxisSpacing: 1.0,
+      body: Column(
         children: <Widget>[
-          Container(
-              padding: EdgeInsets.only(bottom: 50),
-              child: TextButton(
-                style: ButtonStyle(),
-                child: Icon(Icons.calendar_today),
-                onPressed: () async {
-                  showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime.now(),
-                  ).then((selectDate) {
-                    _date = selectDate!;
-                  });
-                },
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              child: Row(
+                children: [
+                  IconButton(
+                      onPressed: () async {
+                        showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime.now(),
+                        ).then((selectDate) {
+                          _date = selectDate!;
+                        });
+                      },
+                      icon: Icon(Icons.calendar_today)),
+                  Text(formatter.format(_date))
+                ],
               )),
-          Container(
-            padding: EdgeInsets.only(left: 100, top: 50),
-            child: Text("التاريخ"),
-          ),
-          Container(
-            child: TextField(
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: TextFormField(
+              style: TextStyle(
+                fontSize: 30.0,
+                height: 2.0,
+              ),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'مبلغ',
+                  labelText: 'المبلغ',
+                  suffixIcon: Icon(Icons.money)),
+              keyboardType: TextInputType.phone,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
+              ],
               onChanged: (text) {
                 _Textvalue = text;
               },
             ),
           ),
-          Container(padding: EdgeInsets.only(left: 100), child: Text("المبلغ")),
-          Container(
-              padding: EdgeInsets.only(bottom: 100),
-              child: DropdownButton(onChanged: null, items: [])),
-          Container(
-            padding: EdgeInsets.only(left: 100),
-            child: Text("الصنف"),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: DropdownButton(
+              onChanged: null,
+              items: [],
+            ),
           ),
-          Column(
-            children: <Widget>[
-              Container(
-                  padding: EdgeInsets.only(left: 0, top: 50),
-                  width: double.infinity,
-                  child: TextField(
-                    keyboardType: TextInputType.multiline,
-                    onChanged: (text) {
-                      _note = text;
-                    },
-                  ))
-            ],
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 100, top: 50),
-            child: Text("ملاحضة"),
-          ),
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+              child: TextField(
+                style: TextStyle(
+                  fontSize: 10.0,
+                  height: 10.0,
+                ),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'ملاحظة',
+                  labelText: 'ملاحظة',
+                ),
+                keyboardType: TextInputType.multiline,
+                onChanged: (text) {
+                  _note = text;
+                },
+              ))
         ],
       ),
       bottomSheet: Container(
