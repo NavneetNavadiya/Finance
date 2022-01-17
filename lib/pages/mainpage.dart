@@ -24,6 +24,17 @@ class MainPage extends StatefulWidget {
 
 // This widget is the root of your application.
 class _page extends State<MainPage> {
+  _refresh() async {
+    await DBhelper.instance.getAvrage();
+    await DBhelper.instance.getBillsTotal();
+    await DBhelper.instance.getTotalBalance();
+  }
+
+  @override
+  void initState() {
+    _refresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +53,8 @@ class _page extends State<MainPage> {
                     //data of analysis
                     children: [
                       text('average of sepnd:' + avg),
-                      Text('total sepnd:' + bill)
+                      text('total sepnd:' + bill),
+                      text('balance: ' + balance)
                     ],
                   ) //data of analysis
                 ]),
@@ -52,13 +64,5 @@ class _page extends State<MainPage> {
       floatingActionButton: FloatingActionButton(
           onPressed: () {}, child: const Icon(Icons.camera_alt_outlined)),
     );
-  }
-
-  Widget showBillsTotal() {
-    return Text(bill != '' ? bill : '0 ');
-  }
-
-  Widget showAVg() {
-    return Text(avg != '' ? avg : '0 ');
   }
 }

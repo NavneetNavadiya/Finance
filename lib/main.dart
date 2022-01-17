@@ -18,17 +18,6 @@ void main() {
 }
 
 class app extends StatelessWidget {
-  void _refresh() async {
-    DBhelper.instance.getAvrage();
-    DBhelper.instance.getBillsTotal();
-    DBhelper.instance.getTotalBalance();
-  }
-
-  @override
-  void initState() {
-    _refresh();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -55,9 +44,6 @@ class _Nav extends State<MyApp> {
   late int index = 1;
   void _onItemTapped(int _index) {
     setState(() {
-      DBhelper.instance.getAvrage();
-      DBhelper.instance.getBillsTotal();
-      DBhelper.instance.getTotalBalance();
       index = _index;
     });
   }

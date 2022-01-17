@@ -59,7 +59,7 @@ class DBhelper {
   Future<void> insertBill(bill) async {
     final db = await instance.database;
     String date = bill.getDate();
-    double value = bill.getValue();
+    double value = bill.getValue() * -1;
     String type = bill.getType();
     String note = bill.getNote();
     var balanceResult = await db
@@ -79,9 +79,17 @@ class DBhelper {
 
   Future getBalance() async {
     final db = await instance.database;
-    var balanceResult = await db
-        ?.rawQuery('SELECT $VALUE FROM $BALANCE ORDER BY $ID DESC LIMIT 1');
-    double _balance = balanceResult![0][VALUE] as double;
+    // var balanceResult = await db
+    //     ?.rawQuery('SELECT $VALUE FROM $BALANCE ORDER BY $ID DESC LIMIT 1');
+    // double _balance = balanceResult![0][VALUE] as double;
+    var qincome = await db?.rawQuery('SELECT SUM($VALUE) FROM $INCOME');
+    var qbill = await db?.rawQuery('SELECT SUM($VALUE) FROM $BILL');
+    double _income = qincome![0]['SUM($VALUE)'] as double;
+    double _bill = qbill![0]['SUM($VALUE)'] as double;
+    if (_bill == null) _bill = 0;
+    if (_income == null) _income = 0;
+
+    double _balance = _income + _bill;
     return _balance.toString();
   }
 
