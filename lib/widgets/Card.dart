@@ -24,8 +24,8 @@ class list extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
-            title: Text(_id + ' Date: ' + _date + '\nType :' + _type),
-            subtitle: Text('spend: ' + _amount + '\nNote: ' + _note),
+            title: Text(_id + ' التاريخ: ' + _date + '\nالنوع :' + _type),
+            subtitle: Text('قيمة: ' + _amount + '\nالملاحظة: ' + _note),
           ),
         ],
       ),

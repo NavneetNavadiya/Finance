@@ -39,7 +39,7 @@ class _page extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("home")),
+      appBar: AppBar(title: Text("الصفحة الرئيسية")),
       body: Column(
         children: [
           Container(
@@ -55,7 +55,7 @@ class _page extends State<MainPage> {
                   })),
           Expanded(
             child: Column(children: <Widget>[
-              text('average:' + avg + ' total sepnd:' + bill),
+              text('متوسط الصرف: ' + avg + 'مجوع الصرف:' + bill),
               Container(width: double.infinity, child: Analysis())
             ]),
           )

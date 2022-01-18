@@ -5,7 +5,7 @@ Widget Credit(_balance) {
   return Container(
       height: 200,
       child: CreditCard(
-          bankName: "Balance",
+          bankName: "الرصيد",
           cardNumber: _balance,
           cardType: CardType.other,
           showBackSide: false,

@@ -42,7 +42,7 @@ class _page extends State<Billpage> {
       body: isBillsLoading
           ? CircularProgressIndicator()
           : Bills.isEmpty
-              ? const Text("NO BILLS!")
+              ? const Text("لا يوجد مصاريف !")
               : buildBills(),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
