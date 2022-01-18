@@ -176,3 +176,15 @@ class DBhelper {
     balance = await getBalance();
   }
 }
+/* 
+
+ 
+house 
+other 
+education 
+food 
+gerocery
+health
+shoping 
+phone 
+ */

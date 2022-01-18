@@ -55,7 +55,26 @@ class _page extends State<MainPage> {
                   })),
           Expanded(
             child: Column(children: <Widget>[
-              text('متوسط الصرف: ' + avg + 'مجوع الصرف:' + bill),
+              FutureBuilder(
+                  future: DBhelper.instance.getTotalBalance(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      // do not change this text
+                      print("snapshot.data -> ");
+                      print(snapshot.data);
+                    }
+                    return text('مجوع الصرف:' + bill);
+                  }),
+              FutureBuilder(
+                  future: DBhelper.instance.getAvrage(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      // do not change this text
+                      print("snapshot.data -> ");
+                      print(snapshot.data);
+                    }
+                    return text('متوسط الصرف: ' + avg);
+                  }),
               Container(width: double.infinity, child: Analysis())
             ]),
           )
