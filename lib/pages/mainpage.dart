@@ -8,7 +8,7 @@ import '../Income.dart';
 import '../bill.dart';
 import '../widgets/Credit card.dart';
 import '../widgets/text.dart';
-import 'Graph.dart';
+import '../widgets/Graph.dart';
 
 final DateFormat formatter = DateFormat('yyyy-MM');
 var _isLoading = false;

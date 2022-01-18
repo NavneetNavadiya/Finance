@@ -152,7 +152,12 @@ class DBhelper {
     final db = await instance.database;
     final result = await db?.rawQuery('select SUM($VALUE) from $BILL');
     double total = result![0]['SUM($VALUE)'] as double;
-    return total.toString();
+    if (result![0]['SUM($VALUE)'] != null)
+      return total.toString();
+    else {
+      total = 0.0;
+      return total.toString();
+    }
   }
 
   Future printTotalIncome() async {
@@ -165,7 +170,10 @@ class DBhelper {
   Future getAvrage() async {
     final db = await instance.database;
     final _result = await db?.rawQuery('SELECT AVG($VALUE) from $BILL');
-    avg = _result![0]['AVG($VALUE)'].toString();
+    if (_result?[0]['AVG($VALUE)'] != null)
+      avg = _result![0]['AVG($VALUE)'].toString();
+    else
+      avg = "0.0";
   }
 
   getBillsTotal() async {
@@ -175,10 +183,71 @@ class DBhelper {
   getTotalBalance() async {
     balance = await getBalance();
   }
+
+  getOther() async {
+    final db = await instance.database;
+    final _result = await db
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['آخر']);
+    double total = _result![0]['SUM($VALUE)'] as double;
+    if (total == null) total = 0.0;
+    return total;
+  }
+
+  getHouse() async {
+    final db = await instance.database;
+    final _result = await db
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['بيت']);
+    double total = _result![0]['SUM($VALUE)'] as double;
+    if (total == null) total = 0.0;
+    return total;
+  }
+
+  getEducation() async {
+    final db = await instance.database;
+    final _result = await db
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['التعليم']);
+    double total = _result![0]['SUM($VALUE)'] as double;
+    if (total == null) total = 0.0;
+    return total;
+  }
+
+  getGrocery() async {
+    final db = await instance.database;
+    final _result = await db
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['بقالة']);
+    double total = _result![0]['SUM($VALUE)'] as double;
+    if (total == null) total = 0.0;
+    return total;
+  }
+
+  getHealth() async {
+    final db = await instance.database;
+    final _result = await db
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['الصحة']);
+    double total = _result![0]['SUM($VALUE)'] as double;
+    if (total == null) total = 0.0;
+    return total;
+  }
+
+  getShopping() async {
+    final db = await instance.database;
+    final _result = await db
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['التسوق']);
+    double total = _result![0]['SUM($VALUE)'] as double;
+    if (total == null) total = 0.0;
+    return total;
+  }
+
+  getPhone() async {
+    final db = await instance.database;
+    final _result = await db
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['هاتف']);
+    double total = _result![0]['SUM($VALUE)'] as double;
+    if (total == null) total = 0.0;
+    return total;
+  }
 }
 /* 
-
- 
 house 
 other 
 education 

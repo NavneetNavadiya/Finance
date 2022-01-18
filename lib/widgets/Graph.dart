@@ -5,10 +5,14 @@ import 'package:pie_chart/pie_chart.dart';
 
 class Analysis extends StatelessWidget {
   Map<String, double> data = {
-    "Flutter": 50,
-    "React": 30,
-    "Xamarin": 20,
-    "Ionic": 20,
+    "بيت": 50,
+    "التعليم": 30,
+    "غذاء": 20,
+    "بقالة": 20,
+    'الصحة': 20,
+    'التسوق': 10,
+    'هاتف': 80,
+    'آخر': 0
   };
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,7 @@ class Analysis extends StatelessWidget {
         animationDuration: Duration(milliseconds: 800),
         chartRadius: MediaQuery.of(context).size.width / 1,
         legendOptions: LegendOptions(
-          legendPosition: LegendPosition.right,
+          legendPosition: LegendPosition.left,
         ));
   }
 }
