@@ -44,6 +44,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.1
   awesome_card: ^1.1.6
+  pie_chart: ^5.1.0
 
 dev_dependencies:
   flutter_test:

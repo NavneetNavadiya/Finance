@@ -1,5 +1,6 @@
+import 'package:finance/widgets/inpuNote.dart';
+import 'package:finance/widgets/inputNumber.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import '../widgets/button.dart';
@@ -11,6 +12,7 @@ late var _Textvalue = '0';
 late var _note = 'NO NOTE';
 late DateTime _date = DateTime.now();
 final DateFormat formatter = DateFormat('yyyy-MM-dd');
+late var input;
 
 class addIncome extends StatefulWidget {
   @override
@@ -49,26 +51,8 @@ class page extends State<addIncome> {
               ],
             )),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-          child: TextFormField(
-            style: TextStyle(
-              fontSize: 30.0,
-              height: 2.0,
-            ),
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'مبلغ',
-                labelText: 'المبلغ',
-                suffixIcon: Icon(Icons.money)),
-            keyboardType: TextInputType.phone,
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
-            ],
-            onChanged: (text) {
-              _Textvalue = text;
-            },
-          ),
-        ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+            child: input = inputMoney(_Textvalue)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
           child: DropdownButton(
@@ -80,6 +64,7 @@ class page extends State<addIncome> {
       bottomSheet: Container(
           width: double.infinity,
           child: Button("اضافة", () async {
+            _Textvalue = await input.getValue();
             late double _value = double.parse(_Textvalue);
             late String _formatted = formatter.format(_date);
             Income income = Income(

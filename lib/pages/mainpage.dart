@@ -8,6 +8,7 @@ import '../Income.dart';
 import '../bill.dart';
 import '../widgets/Credit card.dart';
 import '../widgets/text.dart';
+import 'Graph.dart';
 
 final DateFormat formatter = DateFormat('yyyy-MM');
 var _isLoading = false;
@@ -41,23 +42,22 @@ class _page extends State<MainPage> {
       appBar: AppBar(title: Text("home")),
       body: Column(
         children: [
-          Container(child: Credit(balance)),
+          Container(
+              child: FutureBuilder(
+                  future: DBhelper.instance.getTotalBalance(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      // do not change this text
+                      print("snapshot.data -> ");
+                      print(snapshot.data);
+                    }
+                    return Credit(balance);
+                  })),
           Expanded(
-            child: GridView.count(
-                crossAxisCount: 2,
-                childAspectRatio: .99,
-                crossAxisSpacing: 20.0,
-                mainAxisSpacing: 1.0,
-                children: <Widget>[
-                  Column(
-                    //data of analysis
-                    children: [
-                      text('average of sepnd:' + avg),
-                      text('total sepnd:' + bill),
-                      text('balance: ' + balance)
-                    ],
-                  ) //data of analysis
-                ]),
+            child: Column(children: <Widget>[
+              text('average:' + avg + ' total sepnd:' + bill),
+              Container(width: double.infinity, child: Analysis())
+            ]),
           )
         ],
       ),
