@@ -14,6 +14,7 @@ final DateFormat formatter = DateFormat('yyyy-MM');
 var _isLoading = false;
 late List<Bill> Bills;
 late List<Income> Incomes;
+late Map<String, double> data;
 
 class MainPage extends StatefulWidget {
   @override
@@ -29,6 +30,19 @@ class _page extends State<MainPage> {
     await DBhelper.instance.getAvrage();
     await DBhelper.instance.getBillsTotal();
     await DBhelper.instance.getTotalBalance();
+  }
+
+  getAnalysis() async {
+    data = {
+      "بيت": await DBhelper.instance.getHouse(),
+      "التعليم": await DBhelper.instance.getEducation(),
+      "غذاء": await DBhelper.instance.getFood(),
+      "بقالة": await DBhelper.instance.getGrocery(),
+      'الصحة': await DBhelper.instance.getHealth(),
+      'التسوق': await DBhelper.instance.getShopping(),
+      'هاتف': await DBhelper.instance.getPhone(),
+      'آخر': await DBhelper.instance.getOther()
+    };
   }
 
   @override
@@ -75,7 +89,17 @@ class _page extends State<MainPage> {
                     }
                     return text('متوسط الصرف: ' + avg);
                   }),
-              Container(width: double.infinity, child: Analysis())
+              FutureBuilder(
+                  future: getAnalysis(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      // do not change this text
+                      print("snapshot.data -> ");
+                      print(snapshot.data);
+                    }
+                    return Container(
+                        width: double.infinity, child: Analysis(data));
+                  }),
             ]),
           )
         ],

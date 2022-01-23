@@ -24,8 +24,17 @@ class addBillpage extends State<addBill> {
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   late var input;
   late var Note;
-  var catagorie = 'Item 1';
-  var items = ['Item 1', 'Item 2', 'Item 3'];
+  var catagorie = 'بيت';
+  var items = [
+    "بيت",
+    "التعليم",
+    "غذاء",
+    "بقالة",
+    'الصحة',
+    'التسوق',
+    'هاتف',
+    'آخر'
+  ];
 
   @override
   Widget build(BuildContext context) {

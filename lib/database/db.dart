@@ -243,7 +243,18 @@ class DBhelper {
     final _result = await db
         ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['هاتف']);
     double total = _result![0]['SUM($VALUE)'] as double;
-    if (total == null) total = 0.0;
+    if (total == null) total = 0;
+
+    return total;
+  }
+
+  getFood() async {
+    final db = await instance.database;
+    final _result = await db
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['غذاء']);
+    double total = _result![0]['SUM($VALUE)'] as double;
+    if (total == null) total = 0;
+
     return total;
   }
 }
