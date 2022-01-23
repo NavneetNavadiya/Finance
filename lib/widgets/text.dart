@@ -7,6 +7,7 @@ class text extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       words,
+      textAlign: TextAlign.right,
       style: TextStyle(),
     );
   }

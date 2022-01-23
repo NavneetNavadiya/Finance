@@ -1,4 +1,6 @@
+import 'package:finance/widgets/text.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 class list extends StatelessWidget {
   late String _id;
@@ -24,8 +26,9 @@ class list extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
-            title: Text(_id + ' التاريخ: ' + _date + '\nالنوع :' + _type),
-            subtitle: Text('قيمة: ' + _amount + '\nالملاحظة: ' + _note),
+            title:
+                text(_id + '\n' + ' التاريخ: ' + _date + '\nالنوع :' + _type),
+            subtitle: text('قيمة: ' + _amount + '\nالملاحظة: ' + _note),
           ),
         ],
       ),
