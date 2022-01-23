@@ -2,6 +2,7 @@ import 'package:finance/bill.dart';
 import 'package:finance/widgets/inpuNote.dart';
 import 'package:finance/widgets/inputNumber.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import '../widgets/button.dart';
@@ -65,8 +66,26 @@ class addBillpage extends State<addBill> {
                 ],
               )),
           Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-              child: input = inputMoney(_Textvalue)),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: TextFormField(
+              style: TextStyle(
+                fontSize: 30.0,
+                height: 2.0,
+              ),
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'مبلغ',
+                  labelText: 'المبلغ',
+                  suffixIcon: Icon(Icons.money)),
+              keyboardType: TextInputType.phone,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
+              ],
+              onChanged: (text) {
+                _Textvalue = text;
+              },
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: DropdownButton(
@@ -93,7 +112,6 @@ class addBillpage extends State<addBill> {
       bottomSheet: Container(
           width: double.infinity,
           child: Button("اضافة", () async {
-            _Textvalue = await input.getValue();
             _note = await Note.getNote();
             late double _value = double.parse(_Textvalue);
             late String _formatted = formatter.format(_date);
