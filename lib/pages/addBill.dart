@@ -17,13 +17,15 @@ class addBill extends StatefulWidget {
 }
 
 class addBillpage extends State<addBill> {
-  String catagories = 'اختارنوع المصروف';
+  //String catagories = 'اختارنوع المصروف';
   late var _Textvalue = '0';
   late var _note = 'NO NOTE';
   late DateTime _date = DateTime.now();
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   late var input;
   late var Note;
+  var catagorie = 'Item 1';
+  var items = ['Item 1', 'Item 2', 'Item 3'];
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +61,19 @@ class addBillpage extends State<addBill> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: DropdownButton(
-              onChanged: null,
-              items: [],
+              value: catagorie,
+              icon: Icon(Icons.arrow_downward),
+              items: items.map((String a) {
+                return DropdownMenuItem<String>(
+                  value: a,
+                  child: Text(a),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  catagorie = newValue!;
+                });
+              },
             ),
           ),
           Padding(
@@ -79,7 +92,7 @@ class addBillpage extends State<addBill> {
                 id: 1,
                 date: _formatted,
                 value: _value,
-                type: 'car',
+                type: catagorie,
                 note: _note);
             await DBhelper.instance.insertBill(bill);
             DBhelper.instance.getBillsTotal();
