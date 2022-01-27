@@ -9,6 +9,7 @@ import 'pages/mainpage.dart';
 import 'Income.dart';
 import 'bill.dart';
 import 'database/db.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 late List<Bill> Bills;
 late List<Income> Incomes;
@@ -21,13 +22,18 @@ class app extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: <Locale>[
+          Locale('ar'),
+        ],
+        locale: Locale('ar'),
         title: "Finance",
         theme: ThemeData(
             brightness: Brightness.light,
-            shadowColor: Colors.amber,
             scaffoldBackgroundColor: Colors.blueGrey[50],
-            backgroundColor: Colors.amber,
-            splashColor: Colors.yellow,
             appBarTheme: AppBarTheme(backgroundColor: Colors.indigo)),
         home: MyApp());
   }
@@ -74,7 +80,7 @@ class _Nav extends State<MyApp> {
             ),
             Icon(Icons.line_style_outlined, size: 30),
           ],
-          color: Colors.cyan.shade50,
+          color: Colors.white,
           buttonBackgroundColor: Colors.blue,
           backgroundColor: Colors.indigo,
           animationCurve: Curves.easeInOut,

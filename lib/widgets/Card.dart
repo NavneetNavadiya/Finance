@@ -13,14 +13,14 @@ class list extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.blue[50],
+      color: Colors.white,
       borderOnForeground: false,
       semanticContainer: true,
-      elevation: 10,
+      elevation: 50,
       shadowColor: Colors.black,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.transparent, width: 1),
-        borderRadius: BorderRadius.circular(0),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

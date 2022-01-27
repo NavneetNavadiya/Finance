@@ -9,12 +9,21 @@ import '../bill.dart';
 import '../widgets/Credit card.dart';
 import '../widgets/text.dart';
 import '../widgets/Graph.dart';
+import 'camera.dart';
 
 final DateFormat formatter = DateFormat('yyyy-MM');
 var _isLoading = false;
 late List<Bill> Bills;
 late List<Income> Incomes;
 late Map<String, double> data;
+double house = 0;
+double food = 0;
+double Entertainment = 0;
+double bills = 0;
+double health = 0;
+double shopping = 0;
+double car = 0;
+double other = 0;
 
 class MainPage extends StatefulWidget {
   @override
@@ -34,14 +43,14 @@ class _page extends State<MainPage> {
 
   getAnalysis() async {
     data = {
-      "بيت": await DBhelper.instance.getHouse(),
-      "التعليم": await DBhelper.instance.getEducation(),
-      "غذاء": await DBhelper.instance.getFood(),
-      "بقالة": await DBhelper.instance.getGrocery(),
-      'الصحة': await DBhelper.instance.getHealth(),
-      'التسوق': await DBhelper.instance.getShopping(),
-      'هاتف': await DBhelper.instance.getPhone(),
-      'آخر': await DBhelper.instance.getOther()
+      "المنزل": await DBhelper.instance.getHouse() * -1,
+      "الترفيه": await DBhelper.instance.getEntertainment() * -1,
+      "المطاعم": await DBhelper.instance.getFood() * -1,
+      "الفواتير": await DBhelper.instance.getBills() * -1,
+      'الصحة': await DBhelper.instance.getHealth() * -1,
+      'التسوق': await DBhelper.instance.getShopping() * -1,
+      'السيارة': await DBhelper.instance.getCar() * -1,
+      'اخرى': await DBhelper.instance.getOther() * -1
     };
   }
 
@@ -77,7 +86,7 @@ class _page extends State<MainPage> {
                       print("snapshot.data -> ");
                       print(snapshot.data);
                     }
-                    return text('مجوع الصرف:' + bill);
+                    return text('مجموع الصرف:' + bill);
                   }),
               FutureBuilder(
                   future: DBhelper.instance.getAvrage(),
@@ -105,7 +114,13 @@ class _page extends State<MainPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {}, child: const Icon(Icons.camera_alt_outlined)),
+          onPressed: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => camera()),
+            );
+          },
+          child: const Icon(Icons.camera_alt_outlined)),
     );
   }
 }

@@ -40,7 +40,10 @@ class _page extends State<IncomePage> {
       body: isIncomeLoading
           ? CircularProgressIndicator()
           : Incomes.isEmpty
-              ? const Text("لا يوجد مدخول !")
+              ? const Text(
+                  "لا يوجد مدخول !",
+                  textAlign: TextAlign.center,
+                )
               : buildIncomes(),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {

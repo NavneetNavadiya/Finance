@@ -11,6 +11,13 @@ import '../main.dart';
 late var _Textvalue = '0';
 late var _note = 'NO NOTE';
 late DateTime _date = DateTime.now();
+var _catagorie = 'الراتب';
+var items = [
+  "الراتب",
+  "مدخول",
+  "قرض",
+  "مرجوع",
+];
 final DateFormat formatter = DateFormat('yyyy-MM-dd');
 late var input;
 
@@ -43,7 +50,9 @@ class page extends State<addIncome> {
                         firstDate: DateTime(2000),
                         lastDate: DateTime.now(),
                       ).then((selectDate) {
-                        _date = selectDate!;
+                        setState(() {
+                          _date = selectDate!;
+                        });
                       });
                     },
                     icon: Icon(Icons.calendar_today)),
@@ -56,8 +65,19 @@ class page extends State<addIncome> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
           child: DropdownButton(
-            onChanged: null,
-            items: [],
+            value: _catagorie,
+            icon: Icon(Icons.arrow_downward),
+            items: items.map((String a) {
+              return DropdownMenuItem<String>(
+                value: a,
+                child: Text(a),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                _catagorie = newValue!;
+              });
+            },
           ),
         ),
       ]),
@@ -71,7 +91,7 @@ class page extends State<addIncome> {
               id: 1,
               date: _formatted,
               amount: _value,
-              type: 'salary',
+              type: _catagorie,
             );
             await DBhelper.instance.insertIcome(income);
             Incomes = (await DBhelper.instance.PrintIncomes());

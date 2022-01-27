@@ -1,6 +1,5 @@
 import 'package:finance/bill.dart';
 import 'package:finance/widgets/inpuNote.dart';
-import 'package:finance/widgets/inputNumber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -25,16 +24,16 @@ class addBillpage extends State<addBill> {
   final DateFormat formatter = DateFormat('yyyy-MM-dd');
   late var input;
   late var Note;
-  var catagorie = 'بيت';
+  var _catagorie = 'المنزل';
   var items = [
-    "بيت",
-    "التعليم",
-    "غذاء",
-    "بقالة",
+    "المنزل",
+    "الفواتير",
+    "المطاعم",
+    "الترفيه",
     'الصحة',
     'التسوق',
-    'هاتف',
-    'آخر'
+    'السيارة',
+    'اخرى'
   ];
 
   @override
@@ -58,7 +57,9 @@ class addBillpage extends State<addBill> {
                           firstDate: DateTime(2000),
                           lastDate: DateTime.now(),
                         ).then((selectDate) {
-                          _date = selectDate!;
+                          setState(() {
+                            _date = selectDate!;
+                          });
                         });
                       },
                       icon: Icon(Icons.calendar_today)),
@@ -89,7 +90,7 @@ class addBillpage extends State<addBill> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: DropdownButton(
-              value: catagorie,
+              value: _catagorie,
               icon: Icon(Icons.arrow_downward),
               items: items.map((String a) {
                 return DropdownMenuItem<String>(
@@ -99,7 +100,7 @@ class addBillpage extends State<addBill> {
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
-                  catagorie = newValue!;
+                  _catagorie = newValue!;
                 });
               },
             ),
@@ -115,13 +116,13 @@ class addBillpage extends State<addBill> {
             _note = await Note.getNote();
             late double _value = double.parse(_Textvalue);
             late String _formatted = formatter.format(_date);
-            Bill bill = Bill(
+            Bill _bill = Bill(
                 id: 1,
                 date: _formatted,
                 value: _value,
-                type: catagorie,
+                type: _catagorie,
                 note: _note);
-            await DBhelper.instance.insertBill(bill);
+            await DBhelper.instance.insertBill(_bill);
             DBhelper.instance.getBillsTotal();
             DBhelper.instance.getTotalBalance();
             DBhelper.instance.getAvrage();

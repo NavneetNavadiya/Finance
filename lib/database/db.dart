@@ -118,7 +118,8 @@ class DBhelper {
     final db = await instance.database;
 
     // Query the table for all The bill.
-    final List<Map<String, dynamic>> maps = await db!.query(BILL);
+    final List<Map<String, dynamic>> maps =
+        await db!.query(BILL, orderBy: '$ID DESC');
 
     // Convert the List<Map<String, dynamic> into a List<bill>.
     return List.generate(maps.length, (i) {
@@ -135,7 +136,8 @@ class DBhelper {
     final db = await instance.database;
 
     // Query the table for all The inocme.
-    final List<Map<String, dynamic>> maps = await db!.query(INCOME);
+    final List<Map<String, dynamic>> maps =
+        await db!.query(INCOME, orderBy: '$ID DESC');
 
     // Convert the List<Map<String, dynamic> into a List<income>.
     return List.generate(maps.length, (i) {
@@ -187,7 +189,7 @@ class DBhelper {
   getOther() async {
     final db = await instance.database;
     final _result = await db
-        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['آخر']);
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['اخرى']);
     double total = _result![0]['SUM($VALUE)'] as double;
     if (total == null) total = 0.0;
     return total;
@@ -196,25 +198,25 @@ class DBhelper {
   getHouse() async {
     final db = await instance.database;
     final _result = await db
-        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['بيت']);
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['المنزل']);
     double total = _result![0]['SUM($VALUE)'] as double;
     if (total == null) total = 0.0;
     return total;
   }
 
-  getEducation() async {
+  getEntertainment() async {
     final db = await instance.database;
     final _result = await db
-        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['التعليم']);
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['الترفيه']);
     double total = _result![0]['SUM($VALUE)'] as double;
     if (total == null) total = 0.0;
     return total;
   }
 
-  getGrocery() async {
+  getBills() async {
     final db = await instance.database;
     final _result = await db
-        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['بقالة']);
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['الفواتير']);
     double total = _result![0]['SUM($VALUE)'] as double;
     if (total == null) total = 0.0;
     return total;
@@ -238,10 +240,10 @@ class DBhelper {
     return total;
   }
 
-  getPhone() async {
+  getCar() async {
     final db = await instance.database;
     final _result = await db
-        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['هاتف']);
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['السيارة']);
     double total = _result![0]['SUM($VALUE)'] as double;
     if (total == null) total = 0;
 
@@ -251,7 +253,7 @@ class DBhelper {
   getFood() async {
     final db = await instance.database;
     final _result = await db
-        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['غذاء']);
+        ?.rawQuery('SELECT SUM($VALUE) FROM $BILL WHERE TYPE =?', ['المطاعم']);
     double total = _result![0]['SUM($VALUE)'] as double;
     if (total == null) total = 0;
 
