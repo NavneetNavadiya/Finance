@@ -15,6 +15,7 @@ late List<Bill> Bills;
 late List<Income> Incomes;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(app());
 }
 
@@ -22,20 +23,21 @@ class app extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: <Locale>[
-          Locale('ar'),
-        ],
-        locale: Locale('ar'),
-        title: "Finance",
-        theme: ThemeData(
-            brightness: Brightness.light,
-            scaffoldBackgroundColor: Colors.blueGrey[50],
-            appBarTheme: AppBarTheme(backgroundColor: Colors.indigo)),
-        home: MyApp());
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: <Locale>[
+        Locale('ar'),
+      ],
+      locale: Locale('ar'),
+      title: "Finance",
+      theme: ThemeData(
+          brightness: Brightness.light,
+          scaffoldBackgroundColor: Colors.blueGrey[50],
+          appBarTheme: AppBarTheme(backgroundColor: Colors.indigo)),
+      home: MyApp(),
+    );
   }
 }
 

@@ -1,7 +1,10 @@
 // ignore_for_file: unnecessary_new, prefer_const_constructors, unnecessary_string_escapes
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../database/db.dart';
 import '../Income.dart';
@@ -9,21 +12,13 @@ import '../bill.dart';
 import '../widgets/Credit card.dart';
 import '../widgets/text.dart';
 import '../widgets/Graph.dart';
-import 'camera.dart';
+import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
 
 final DateFormat formatter = DateFormat('yyyy-MM');
 var _isLoading = false;
 late List<Bill> Bills;
 late List<Income> Incomes;
 late Map<String, double> data;
-double house = 0;
-double food = 0;
-double Entertainment = 0;
-double bills = 0;
-double health = 0;
-double shopping = 0;
-double car = 0;
-double other = 0;
 
 class MainPage extends StatefulWidget {
   @override
@@ -35,6 +30,24 @@ class MainPage extends StatefulWidget {
 
 // This widget is the root of your application.
 class _page extends State<MainPage> {
+  var _image;
+  Future getImage(ImgSource source) async {
+    var image = await ImagePickerGC.pickImage(
+      enableCloseButton: true,
+      closeIcon: Icon(
+        Icons.close,
+        color: Colors.red,
+        size: 12,
+      ),
+      context: context,
+      source: source,
+      barrierDismissible: true,
+    );
+    setState() {
+      _image = image;
+    }
+  }
+
   _refresh() async {
     await DBhelper.instance.getAvrage();
     await DBhelper.instance.getBillsTotal();
@@ -115,10 +128,10 @@ class _page extends State<MainPage> {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            await Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => camera()),
-            );
+            await getImage(ImgSource.Camera);
+            Directory appDocDir = await getApplicationSupportDirectory();
+            String appDocPath = appDocDir.path;
+            final File localImage = await _image.copy('$appDocPath/image.png');
           },
           child: const Icon(Icons.camera_alt_outlined)),
     );
