@@ -77,7 +77,7 @@ class _page extends State<Billpage> {
         String _note = _bill!.getNote();
 
         if (_bill != null) {
-          return list(_id, _date, _type, _amount, _note);
+          return list(_id, _date, _type, _amount, _note, 1);
         } else
           return Text('no bills');
       });

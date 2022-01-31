@@ -74,7 +74,7 @@ class _page extends State<IncomePage> {
         String _amount = _income!.getAmount().toString();
         String _note = '';
         if (_income != null) {
-          return list(_id, _date, _type, _amount, _note);
+          return list(_id, _date, _type, _amount, _note, 0);
         } else
           return Text('NO INCOMES');
       });

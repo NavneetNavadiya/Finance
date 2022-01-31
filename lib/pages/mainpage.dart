@@ -1,7 +1,7 @@
 // ignore_for_file: unnecessary_new, prefer_const_constructors, unnecessary_string_escapes
 
 import 'dart:io';
-
+import 'package:finance/widgets/cardv2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -52,6 +52,7 @@ class _page extends State<MainPage> {
     await DBhelper.instance.getAvrage();
     await DBhelper.instance.getBillsTotal();
     await DBhelper.instance.getTotalBalance();
+    await DBhelper.instance.printlast();
   }
 
   getAnalysis() async {
@@ -78,29 +79,20 @@ class _page extends State<MainPage> {
       appBar: AppBar(title: Text("الصفحة الرئيسية")),
       body: Column(
         children: [
-          Container(
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
               child: FutureBuilder(
-                  future: DBhelper.instance.getTotalBalance(),
+                  future: _refresh(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       // do not change this text
                       print("snapshot.data -> ");
                       print(snapshot.data);
                     }
-                    return Credit(balance);
+                    return Creditv2(balance, lasttransaction, bill);
                   })),
           Expanded(
             child: Column(children: <Widget>[
-              FutureBuilder(
-                  future: DBhelper.instance.getTotalBalance(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      // do not change this text
-                      print("snapshot.data -> ");
-                      print(snapshot.data);
-                    }
-                    return text('مجموع الصرف:' + bill);
-                  }),
               FutureBuilder(
                   future: DBhelper.instance.getAvrage(),
                   builder: (context, snapshot) {

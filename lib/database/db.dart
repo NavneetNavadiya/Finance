@@ -13,6 +13,7 @@ import '../Income.dart';
 late var bill = '0.0';
 late var income = '0.0';
 late var balance = '0.0';
+late var lasttransaction = '0.0';
 late var avg = '0.0';
 
 class DBhelper {
@@ -186,6 +187,10 @@ class DBhelper {
     balance = await getBalance();
   }
 
+  printlast() async {
+    lasttransaction = await getLastTransaction();
+  }
+
   getOther() async {
     final db = await instance.database;
     final _result = await db
@@ -258,6 +263,28 @@ class DBhelper {
     if (total == null) total = 0;
 
     return total;
+  }
+
+  deleteIncome(id) async {
+    final db = await instance.database;
+    final _result =
+        await db?.rawQuery('DELETE  FROM $INCOME WHERE TYPE =?', ['$id']);
+    return print('done');
+  }
+
+  deleteBill(id) async {
+    final db = await instance.database;
+    final _result =
+        await db?.rawQuery('DELETE  FROM $BILL WHERE TYPE =?', ['$id']);
+    return print('done');
+  }
+
+  getLastTransaction() async {
+    final db = await instance.database;
+
+    final _result = await db?.query(BILL, orderBy: '$ID DESC', limit: 1);
+    double value = _result![0]["$VALUE"] as double;
+    return value.toString();
   }
 }
 /* 
