@@ -2,6 +2,8 @@ import 'package:finance/database/db.dart';
 import 'package:finance/widgets/text.dart';
 import 'package:flutter/material.dart';
 
+import '../main.dart';
+
 class list extends StatelessWidget {
   late String _id;
   late String _date;
@@ -15,8 +17,8 @@ class list extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onLongPress: () {
-          delete(context, _id, _devider);
+        onLongPress: () async {
+          await delete(context, _id, _devider);
         },
         child: Card(
           color: Colors.white,
@@ -46,8 +48,8 @@ delete(context, id, int devider) {
   return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-            title: const Text('AlertDialog Title'),
-            content: const Text('AlertDialog description'),
+            title: const Text('تحذير!!'),
+            content: const Text('سيتم عملية حذف'),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context),

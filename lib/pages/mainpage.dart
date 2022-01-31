@@ -1,18 +1,14 @@
 // ignore_for_file: unnecessary_new, prefer_const_constructors, unnecessary_string_escapes
 
-import 'dart:io';
-import 'package:finance/widgets/cardv2.dart';
+import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../database/db.dart';
 import '../Income.dart';
 import '../bill.dart';
-import '../widgets/Credit card.dart';
-import '../widgets/text.dart';
 import '../widgets/Graph.dart';
-import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
+import 'package:finance/widgets/cardv2.dart';
 
 final DateFormat formatter = DateFormat('yyyy-MM');
 var _isLoading = false;
@@ -77,53 +73,41 @@ class _page extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("الصفحة الرئيسية")),
-      body: Column(
-        children: [
-          Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: FutureBuilder(
-                  future: _refresh(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      // do not change this text
-                      print("snapshot.data -> ");
-                      print(snapshot.data);
-                    }
-                    return Creditv2(balance, lasttransaction, bill);
-                  })),
-          Expanded(
-            child: Column(children: <Widget>[
-              FutureBuilder(
-                  future: DBhelper.instance.getAvrage(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      // do not change this text
-                      print("snapshot.data -> ");
-                      print(snapshot.data);
-                    }
-                    return text('متوسط الصرف: ' + avg);
-                  }),
-              FutureBuilder(
-                  future: getAnalysis(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      // do not change this text
-                      print("snapshot.data -> ");
-                      print(snapshot.data);
-                    }
-                    return Container(
-                        width: double.infinity, child: Analysis(data));
-                  }),
-            ]),
-          )
-        ],
-      ),
+      body: Column(children: [
+        FutureBuilder(
+            future: _refresh(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                // do not change this text
+                print("snapshot.data -> ");
+                print(snapshot.data);
+              }
+              return Credit();
+            }),
+        Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            color: Colors.white,
+            child: Container(
+                height: MediaQuery.of(context).size.width / 1,
+                child: FutureBuilder(
+                    future: getAnalysis(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        // do not change this text
+                        print("snapshot.data -> ");
+                        print(snapshot.data);
+                      }
+                      return Analysis(data);
+                    }))),
+      ]),
       floatingActionButton: FloatingActionButton(
           onPressed: () async {
             await getImage(ImgSource.Camera);
-            Directory appDocDir = await getApplicationSupportDirectory();
-            String appDocPath = appDocDir.path;
-            final File localImage = await _image.copy('$appDocPath/image.png');
+            // Directory appDocDir = await getApplicationSupportDirectory();
+            // String appDocPath = appDocDir.path;
+            // final File localImage = await _image.copy('$appDocPath/image.png');
           },
           child: const Icon(Icons.camera_alt_outlined)),
     );

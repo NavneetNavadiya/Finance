@@ -1,10 +1,8 @@
 // ignore_for_file: constant_identifier_names, import_of_legacy_library_into_null_safe
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:finance/bill.dart';
-import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../bill.dart';
@@ -155,8 +153,8 @@ class DBhelper {
     final db = await instance.database;
     final result = await db?.rawQuery('select SUM($VALUE) from $BILL');
     double total = result![0]['SUM($VALUE)'] as double;
-    if (result![0]['SUM($VALUE)'] != null)
-      return total.toString();
+    if (result[0]['SUM($VALUE)'] != null)
+      return total.round().toString();
     else {
       total = 0.0;
       return total.toString();
@@ -173,9 +171,11 @@ class DBhelper {
   Future getAvrage() async {
     final db = await instance.database;
     final _result = await db?.rawQuery('SELECT AVG($VALUE) from $BILL');
-    if (_result?[0]['AVG($VALUE)'] != null)
-      avg = _result![0]['AVG($VALUE)'].toString();
-    else
+    if (_result?[0]['AVG($VALUE)'] != null) {
+      double value = _result![0]['AVG($VALUE)'] as double;
+      int v = value.round();
+      avg = v.toString();
+    } else
       avg = "0.0";
   }
 
@@ -267,15 +267,15 @@ class DBhelper {
 
   deleteIncome(id) async {
     final db = await instance.database;
-    final _result =
-        await db?.rawQuery('DELETE  FROM $INCOME WHERE TYPE =?', ['$id']);
+    final _result = await db?.delete(INCOME, where: 'id =?', whereArgs: [id]);
+    await getBalance();
     return print('done');
   }
 
   deleteBill(id) async {
     final db = await instance.database;
-    final _result =
-        await db?.rawQuery('DELETE  FROM $BILL WHERE TYPE =?', ['$id']);
+
+    final _result = await db?.delete(BILL, where: 'id =?', whereArgs: [id]);
     return print('done');
   }
 

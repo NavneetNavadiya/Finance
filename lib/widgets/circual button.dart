@@ -5,12 +5,12 @@ import 'boldText.dart';
 
 class CButton extends StatelessWidget {
   @override
-  late final String _name;
-  late final String _path;
+  late String _name;
+  late String _path;
   var _function;
-  late final Color _color;
+  late Color _color;
 
-  CButton(this._name, this._color, this._path, this._function);
+  CButton(this._name, this._color, this._function);
   Widget build(BuildContext context) {
     return InkWell(
         child: Container(
@@ -21,10 +21,6 @@ class CButton extends StatelessWidget {
               bottomRight: Radius.circular(100.0),
               bottomLeft: Radius.circular(100.0)),
           color: _color),
-      child: Column(children: <Widget>[
-        Img(_path, _function),
-        Boldtext(_name),
-      ]),
     ));
   }
 }

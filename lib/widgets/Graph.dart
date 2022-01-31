@@ -12,9 +12,9 @@ class Analysis extends StatelessWidget {
         dataMap: data,
         chartType: ChartType.ring,
         chartLegendSpacing: 30,
-        ringStrokeWidth: 50,
+        ringStrokeWidth: 20,
         animationDuration: Duration(milliseconds: 900),
-        chartRadius: MediaQuery.of(context).size.width / 1.90,
+        chartRadius: MediaQuery.of(context).size.width / 2,
         legendOptions: LegendOptions(
           legendPosition: LegendPosition.top,
           showLegendsInRow: true,

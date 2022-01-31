@@ -128,7 +128,7 @@ class addBillpage extends State<addBill> {
             DBhelper.instance.getAvrage();
             Bills = (await DBhelper.instance.PrintBills());
             print("success");
-            Navigator.pop(context);
+            Navigator.pop(context, balance);
           })),
     );
   }

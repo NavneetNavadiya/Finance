@@ -73,14 +73,14 @@ class _Nav extends State<MyApp> {
           height: 60.0,
           items: <Widget>[
             Icon(
-              Icons.list_alt_sharp,
+              Icons.account_balance_wallet_outlined,
               size: 30,
             ),
             Icon(
               Icons.home,
               size: 30,
             ),
-            Icon(Icons.line_style_outlined, size: 30),
+            Icon(Icons.monetization_on_outlined),
           ],
           color: Colors.white,
           buttonBackgroundColor: Colors.blue,

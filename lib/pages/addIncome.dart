@@ -1,4 +1,3 @@
-import 'package:finance/widgets/inpuNote.dart';
 import 'package:finance/widgets/inputNumber.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
