@@ -63,7 +63,11 @@ delete(context, id, int devider) {
                   if (devider == 1) {
                     await DBhelper.instance.deleteBill(id);
                   }
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => app(),
+                      ));
                 },
                 child: const Text('حذف'),
               ),

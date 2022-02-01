@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_new, prefer_const_constructors, unnecessary_string_escapes
+// ignore_for_file: unnecessary_new, prefer_const_constructors, unnecessary_string_escapes, import_of_legacy_library_into_null_safe
 
 import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
 import 'package:flutter/material.dart';
@@ -29,16 +29,11 @@ class _page extends State<MainPage> {
   var _image;
   Future getImage(ImgSource source) async {
     var image = await ImagePickerGC.pickImage(
-      enableCloseButton: true,
-      closeIcon: Icon(
-        Icons.close,
-        color: Colors.red,
-        size: 12,
-      ),
       context: context,
       source: source,
       barrierDismissible: true,
     );
+
     setState() {
       _image = image;
     }
