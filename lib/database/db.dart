@@ -78,9 +78,7 @@ class DBhelper {
 
   Future getBalance() async {
     final db = await instance.database;
-    // var balanceResult = await db
-    //     ?.rawQuery('SELECT $VALUE FROM $BALANCE ORDER BY $ID DESC LIMIT 1');
-    // double _balance = balanceResult![0][VALUE] as double;
+
     var qincome = await db?.rawQuery('SELECT SUM($VALUE) FROM $INCOME');
     var qbill = await db?.rawQuery('SELECT SUM($VALUE) FROM $BILL');
     double _income = qincome![0]['SUM($VALUE)'] as double;
@@ -153,9 +151,10 @@ class DBhelper {
     final db = await instance.database;
     final result = await db?.rawQuery('select SUM($VALUE) from $BILL');
     double total = result![0]['SUM($VALUE)'] as double;
-    if (result[0]['SUM($VALUE)'] != null)
-      return total.round().toString();
-    else {
+    if (result[0]['SUM($VALUE)'] != null) {
+      double _value = total.round() * -1;
+      return _value.toString();
+    } else {
       total = 0.0;
       return total.toString();
     }
@@ -173,7 +172,7 @@ class DBhelper {
     final _result = await db?.rawQuery('SELECT AVG($VALUE) from $BILL');
     if (_result?[0]['AVG($VALUE)'] != null) {
       double value = _result![0]['AVG($VALUE)'] as double;
-      int v = value.round();
+      int v = value.round() * -1;
       avg = v.toString();
     } else
       avg = "0.0";
@@ -276,6 +275,7 @@ class DBhelper {
     final db = await instance.database;
 
     final _result = await db?.delete(BILL, where: 'id =?', whereArgs: [id]);
+    await getBalance();
     return print('done');
   }
 

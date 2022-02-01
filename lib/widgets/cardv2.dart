@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:finance/database/db.dart';
 import 'package:finance/pages/addBill.dart';
 import 'package:finance/pages/addIncome.dart';
@@ -41,7 +43,7 @@ class widgets extends State<Credit> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "رصيد",
+                      "الرصيد",
                       style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 28,
@@ -49,6 +51,7 @@ class widgets extends State<Credit> {
                           fontWeight: FontWeight.w900),
                     ),
                     IconButton(
+                      iconSize: 50,
                       icon: Icon(Icons.add_circle),
                       color: Colors.green,
                       onPressed: () async {
@@ -59,6 +62,7 @@ class widgets extends State<Credit> {
                       },
                     ),
                     IconButton(
+                      iconSize: 50,
                       color: Colors.red,
                       icon: Icon(Icons.remove_circle),
                       onPressed: () async {
