@@ -1,4 +1,5 @@
 import 'package:finance/bill.dart';
+import 'package:finance/pages/mainpage.dart' as stream;
 import 'package:finance/widgets/inpuNote.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -127,6 +128,7 @@ class addBillpage extends State<addBill> {
             DBhelper.instance.getTotalBalance();
             DBhelper.instance.getAvrage();
             Bills = (await DBhelper.instance.PrintBills());
+            stream.analysisControlller.sink.add(true);
             print("success");
             Navigator.pop(context, balance);
           })),

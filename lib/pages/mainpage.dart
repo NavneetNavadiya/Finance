@@ -1,8 +1,10 @@
 // ignore_for_file: unnecessary_new, prefer_const_constructors, unnecessary_string_escapes, import_of_legacy_library_into_null_safe
 
+import 'package:finance/pages/gallery.dart';
 import 'package:image_picker_gallery_camera/image_picker_gallery_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../database/db.dart';
 import '../Income.dart';
@@ -15,6 +17,9 @@ var _isLoading = false;
 late List<Bill> Bills;
 late List<Income> Incomes;
 late Map<String, double> data;
+var analysisControlller = BehaviorSubject<bool>();
+
+Stream<bool> get analysisStream => analysisControlller.stream;
 
 class MainPage extends StatefulWidget {
   @override
@@ -27,6 +32,7 @@ class MainPage extends StatefulWidget {
 // This widget is the root of your application.
 class _page extends State<MainPage> {
   var _image;
+
   Future getImage(ImgSource source) async {
     var image = await ImagePickerGC.pickImage(
       context: context,
@@ -84,27 +90,49 @@ class _page extends State<MainPage> {
               borderRadius: BorderRadius.circular(20),
             ),
             color: Colors.white,
-            child: Container(
+            child: SizedBox(
                 height: MediaQuery.of(context).size.width / 1,
-                child: FutureBuilder(
-                    future: getAnalysis(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        // do not change this text
-                        print("snapshot.data -> ");
-                        print(snapshot.data);
-                      }
-                      return Analysis(data);
-                    }))),
+                child: StreamBuilder<Object>(
+                  stream: analysisStream,
+                  builder: (context, snapshot) {
+                    return FutureBuilder(
+                        future: getAnalysis(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            // do not change this text
+                            print("snapshot.data -> ");
+                            print(snapshot.data);
+                          }
+                          return Analysis(data);
+                        });
+                  }
+                ))),
       ]),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await getImage(ImgSource.Camera);
-            // Directory appDocDir = await getApplicationSupportDirectory();
-            // String appDocPath = appDocDir.path;
-            // final File localImage = await _image.copy('$appDocPath/image.png');
-          },
-          child: const Icon(Icons.camera_alt_outlined)),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            child: FloatingActionButton(
+                onPressed: () async {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GAlleryScreen(),
+                      ));
+                },
+                child: const Icon(Icons.image)),
+          ),
+          FloatingActionButton(
+              onPressed: () async {
+                await getImage(ImgSource.Camera);
+                // Directory appDocDir = await getApplicationSupportDirectory();
+                // String appDocPath = appDocDir.path;
+                // final File localImage = await _image.copy('$appDocPath/image.png');
+              },
+              child: const Icon(Icons.camera_alt_outlined)),
+        ],
+      ),
     );
   }
 }
